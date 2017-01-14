@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html ng-app='Invertedindex'>
 <head>
   <!--Import Google Icon Font-->
   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -10,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body>
+<body ng-controller='inverted'>
   <!-- Navbar goes here -->
   <nav>
     <div class="nav-wrapper green">
@@ -36,6 +35,7 @@
         </div>
       </form>
       <br/>
+      <p>{{test}}</p>
       <a class=" btn green"><i class='material-icons green'>library_add</i>UPLOAD</a>
       <a class=" btn green"><i class='material-icons'>library_books</i>SEARCH INDEX</a>
     </div>
@@ -54,7 +54,8 @@
     </div>
   </div>
   <!--Import angular js-->
-  <script src="/node_modules/angular/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+  <script src="controllers/app.js"></script>
   <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>

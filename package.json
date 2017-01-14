@@ -1,0 +1,23 @@
+{
+  "name": "inverted-index",
+  "version": "1.0.0",
+  "description": "An inverted index application",
+  "main": "index.js",
+  "dependencies": {
+    "jshint": "^2.9.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-nrotimi/inverted-index.git"
+  },
+  "author": "Rotimi Ifedayo Nelson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andela-nrotimi/inverted-index/issues"
+  },
+  "homepage": "https://github.com/andela-nrotimi/inverted-index#readme"
+}

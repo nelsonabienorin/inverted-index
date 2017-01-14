@@ -4,4 +4,16 @@
 
 class InvertedIndex {
 
+  getFile() {
+
+  }
+
+  validateFile() {
+
+  }
+
+  readFile () {
+
+  }
+
 }

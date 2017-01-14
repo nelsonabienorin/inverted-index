@@ -6,7 +6,9 @@
   "dependencies": {
     "jshint": "^2.9.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.13.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\""
   },

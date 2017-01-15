@@ -1,28 +1,49 @@
 /**
  * An Inverted Inverted Application
  */
-
 class InvertedIndex {
-
-/**
- * A function to validate uploaded file
- */
+  /**
+   * A function to validate uploaded file
+   */
   static validateFile() {
-    let filename = document.getElementById("filename_id").value;
-    let extension = filename.split(".").pop();
-    document.getElementById("uploadinfo_panel").removeAttribute("hidden");
-    let uploadinfo_id = document.getElementById("uploadinfo_id");
-    if (extension === "json") {
-      uploadinfo_id.innerHTML="Your file uploaded successfully !"
-      uploadinfo_id.className = "green-text text-darken-3";
+    const filename = document.getElementById('filename_id').value;
+    const extension = filename.split('.').pop();
+    document.getElementById('uploadinfo_panel').removeAttribute('hidden');
+    const uploadInfoId = document.getElementById('uploadinfo_id');
+    if (extension === 'json') {
+      uploadInfoId.innerHTML = 'File uploaded successfully !';
+      uploadInfoId.className = 'green-text text-darken-3';
+      console.log('if block.....');
+      InvertedIndex.readFile();
     } else {
-      uploadinfo_id.innerHTML="Ops! Invalid file detected!"
-      uploadinfo_id.className = "red-text text-darken-3";
+      uploadInfoId.innerHTML = 'Ops! Invalid file Input detected!';
+      uploadInfoId.className = 'red-text text-darken-3';
+      console.log('else block.....');
     }
   }
-
-  readFile() {
-
+  /**
+   * A function readFile to read into
+   * the content of the json files
+   */
+  static readFile() {
+    console.log('am in read file');
+    jQuery.getJSON('jasmine/books.json', function (doc) {
+      console.log('inside jquery scope');
+      let docCounter = doc.length;
+      //console.log(docCounter);
+      if (docCounter === 0) {
+        alert('No json object found !');
+      } else {
+        let title = [];
+        let text = [];
+        console.log(docCounter);
+        for (let i = 0; i < docCounter; i++) {
+          title.push(doc[i].title);
+          text.push(doc[i].text);
+        }
+        console.log(title);
+        console.log(text);
+      }
+    });
   }
-
 }

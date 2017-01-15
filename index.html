@@ -16,29 +16,40 @@
     <div class="nav-wrapper green">
       <a href="#" class="brand-logo left">Inverted Index</a>
       <ul id="nav-mobile" class="left hide-on-med-and-down right">
-        <li><a href="collapsible.html">Guide</a></li>
+        <li><a href="collapsible.html">About The App</a></li>
       </ul>
     </div>
   </nav>
   <br/> <br/> <br/>
+  <div class="container">
+  <div id="uploadinfo_panel" class="card-panel" hidden>
+        <h5>
+          <span id="uploadinfo_id" style="text-align: center;
+    display: block" class="blue-text text-darken-2"></span>
+        </h5>
+      </div>
+  </div>
   <div class="row">
     <!-- Left Layout -->
     <div class="col s6">
       <form action="#">
         <div class="file-field input-field">
           <div class="btn green">
+            <i class="material-icons">insert_drive_file</i>
             <span>File</span>
-            <input type="file" multiple>
+            <input type="file" id="file_id" multiple>
           </div>
           <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Upload one or more files">
+            <input class="file-path validate" type="text" id="filename_id" placeholder="Upload one or more files"
+              value="">
           </div>
         </div>
       </form>
       <br/>
+
       <p>{{test}}</p>
-      <a class=" btn green" onclick="InvertedIndex.getFile()"><i class='material-icons green'>library_add</i>UPLOAD</a>
-      <a class=" btn green"><i class='material-icons'>library_books</i>SEARCH INDEX</a>      <br/>
+      <a class=" btn green" onclick="InvertedIndex.validateFile()"><i class='material-icons green'>file_upload</i>UPLOAD</a>
+      <a class=" btn green"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>      <br/>
       <table class="striped">
         <thead>
           <tr>
@@ -58,6 +69,7 @@
     </div>
     <div class="col s6">
       <!-- right side panel -->
+
       <div class="nav-wrapper">
         <form>
           <div class="input-field">
@@ -77,7 +89,6 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
   <script type="text/javascript" src="src/inverted-index.js"></script>
-
 </body>
 
 </html>

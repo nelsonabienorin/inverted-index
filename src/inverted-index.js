@@ -5,6 +5,7 @@ class InvertedIndex {
   /**
    * Constructor to initialise
    */
+
   constructor() {
     this.texter = '';
   }
@@ -15,11 +16,9 @@ class InvertedIndex {
     const filename = document.getElementById('filename_id').value;
     const extension = filename.split('.').pop();
     document.getElementById('uploadinfo_panel').removeAttribute('hidden');
-    const uploadInfoId = document.getElementById('uploadinfo_id');
+    let uploadInfoId = document.getElementById('uploadinfo_id');
     if (extension === 'json') {
-      uploadInfoId.innerHTML = 'File uploaded successfully !';
-      uploadInfoId.className = 'green-text text-darken-3';
-      InvertedIndex.readFile();
+      InvertedIndex.readFile(filename, uploadInfoId);
     } else {
       uploadInfoId.innerHTML = 'Oops! Invalid file Input detected!';
       uploadInfoId.className = 'red-text text-darken-3';
@@ -29,13 +28,14 @@ class InvertedIndex {
    * A function readFile to read into
    * the content of the json file
    */
-  static readFile() {
-    jQuery.getJSON('jasmine/books.json', (doc) => {
-
+  static readFile(filename, uploadInfoId) {
+    jQuery.getJSON('jasmine/' + filename, (doc) => {
       const docCounter = doc.length;
       if (docCounter === 0) {
         alert('No json object found !');
       } else {
+      uploadInfoId.innerHTML = 'File uploaded successfully !';
+      uploadInfoId.className = 'green-text text-darken-3';
         const title = [];
         const text = [];
 
@@ -55,11 +55,10 @@ class InvertedIndex {
    */
   static stringifyArray(title, text) {
     let rawText = '';
-    for (let j = 0; j < text.length; j++) {
-      rawText = rawText + text[j];
+    for (let j = 0; j < text.length; j ++) {
+      rawText += text[j];
     }
-    let filteredText = rawText.replace(/[^a-z\d\s]+/gi, ' ');
-    console.log(filteredText);
+    const filteredText = rawText.replace(/[^a-z\d\s]+/gi, ' ');
     InvertedIndex.removeMultipleWords(filteredText);
   }
   /**
@@ -68,7 +67,7 @@ class InvertedIndex {
    * words
    */
   static removeMultipleWords(filteredText) {
-    let uniqueList = filteredText.split(' ').filter((item, i, allItems) => i === allItems.indexOf(item)).join(',');
-    console.log(uniqueList);
+    const uniqueList = filteredText.split(' ').filter((item, i, allItems) => i === allItems.indexOf(item)).join(' ').toLowerCase();
+    console.log(uniqueList.split(' ').sort());
   }
 }

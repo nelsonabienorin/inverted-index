@@ -7,67 +7,75 @@ class InvertedIndex {
    */
 
   constructor() {
-    this.texter = '';
+    // let this.index = {};
+    // let this.titleAndText = [];
+    // let this.allUniqueTokens = {};
+    // let this.allWords = ' ';
   }
   /**
    * A function to validate uploaded file
    */
   static validateFile() {
-    const filename = document.getElementById('filename_id').value;
+    const filename = 'jasmine/' + document.getElementById('filename_id').value;
     const extension = filename.split('.').pop();
     document.getElementById('uploadinfo_panel').removeAttribute('hidden');
     let uploadInfoId = document.getElementById('uploadinfo_id');
     if (extension === 'json') {
-      InvertedIndex.readFile(filename, uploadInfoId);
+      jQuery.getJSON(filename, (book) => {
+        const bookCounter = book.length;
+        if (bookCounter > 0 && typeof book === 'object') {
+          uploadInfoId.innerHTML = 'File uploaded successfully !';
+          uploadInfoId.className = 'green-text text-darken-3';
+          InvertedIndex.createIndex(book);
+        } else {
+          alert('No json object found !');
+        }
+      });
     } else {
       uploadInfoId.innerHTML = 'Oops! Invalid file Input detected!';
       uploadInfoId.className = 'red-text text-darken-3';
     }
   }
-  /**
-   * A function readFile to read into
-   * the content of the json file
-   */
-  static readFile(filename, uploadInfoId) {
-    jQuery.getJSON('jasmine/' + filename, (doc) => {
-      const docCounter = doc.length;
-      if (docCounter === 0) {
-        alert('No json object found !');
-      } else {
-      uploadInfoId.innerHTML = 'File uploaded successfully !';
-      uploadInfoId.className = 'green-text text-darken-3';
-        const title = [];
-        const text = [];
 
-        for (let i = 0; i < docCounter; i++) {
-          title.push(doc[i].title);
-          text.push(doc[i].text);
-        }
-        InvertedIndex.stringifyArray(title, text);
+  static createIndex(book) {
+    let index = {};
+    let titleAndText = [];
+    let allUniqueTokens = {};
+    let allWords = ' ';
+    $.each(book, (index, value) => {
+      let titleText = value.title + ' ' + value.text + ' ';
+      let cleanTitleText = InvertedIndex.cleanWords(titleText);
+      allWords += cleanTitleText;
+      let uniqueBookWords = InvertedIndex.removeMultipleWords(cleanTitleText);
+      titleAndText[index] = uniqueBookWords;
+    });
+    allUniqueTokens = InvertedIndex.removeMultipleWords(allWords).split(' ');
+    console.log(allUniqueTokens);
+    allUniqueTokens.forEach((token) => {
+      if (token !== '') {
+        titleAndText.forEach((book, bookIndex) => {
+          let bookArray = book.split(' ');
+          bookArray.forEach((bookToken) => {
+            if (bookToken === token) {
+              console.log(token + ' found at doc ' + (bookIndex + 1));
+            }
+          });
+        });
       }
     });
   }
-  /**
-   * Function stringifyArray to convert array
-   * into corresponding text and also remove
-   * special characters from the text
-   * @param: title
-   */
-  static stringifyArray(title, text) {
-    let rawText = '';
-    for (let j = 0; j < text.length; j ++) {
-      rawText += text[j];
-    }
-    const filteredText = rawText.replace(/[^a-z\d\s]+/gi, ' ');
-    InvertedIndex.removeMultipleWords(filteredText);
+
+  static cleanWords(titleAndText) {
+    return titleAndText.replace(/[^a-z\d\s]+/gi, ' ');
   }
   /**
    * Function removeMultipleWords to
    * remove multiple occurrences of
    * words
    */
-  static removeMultipleWords(filteredText) {
-    const uniqueList = filteredText.split(' ').filter((item, i, allItems) => i === allItems.indexOf(item)).join(' ').toLowerCase();
-    console.log(uniqueList.split(' ').sort());
+  static removeMultipleWords(words) {
+    let uniqueWords = words.toLowerCase().split(' ').sort().filter((item, i, allItems) => i === allItems.indexOf(item))
+      .join(' ');
+    return uniqueWords;
   }
 }

@@ -45,25 +45,11 @@
         </div>
       </form>
       <br/>
-      <p>{{dtest}}</p> <!--test-->
-      <a class=" btn green" onclick="InvertedIndex.validateFile()"><i class='material-icons green'>file_upload</i>UPLOAD</a>
-      <a class=" btn green"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>      <br/>
-      <table class="striped" hidden>
-        <thead>
-          <tr>
-            <th data-field="word">Word</th>
-            <th data-field="doc1">Document 1</th>
-            <th data-field="doc2">Document 2</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td>X</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+      <!--<p>{{dtest}}</p> test
+      <a class=" btn green"><i class='material-icons green'>file_upload</i>UPLOAD</a>-->
+      <a class=" btn green" onclick="validateobj.validateFile()"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>      <br/> <br/>
+      <!--div id="dynamictable"></div-->
+      <div id="dynamictable"></div>
     </div>
     <div class="col s6">
       <!-- right side panel -->
@@ -86,6 +72,7 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
   <script type="text/javascript" src="src/inverted-index.js"></script>
+  <script type="text/javascript" src="src/app.js"></script>
 </body>
 
 </html>

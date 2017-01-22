@@ -1,81 +1,65 @@
 /**
- * An Inverted Inverted Application
+ * An Inverted Inverted Application class
+ * @class
  */
 class InvertedIndex {
   /**
-   * Constructor to initialise
-   */
-
+   * class constructor
+   * @constructor
+  **/
   constructor() {
-    // let this.index = {};
-    // let this.titleAndText = [];
-    // let this.allUniqueTokens = {};
-    // let this.allWords = ' ';
+    this.allfileIndex = {};
+    this.titleAndText = [];
+    this.allUniqueTokens = {};
+    this.allWords = ' ';
+    this.titleText = '';
+    this.wordIndexes = {};
+    this.myinstance = new InvertedIndexUtility ();
   }
   /**
-   * A function to validate uploaded file
+   * Create index
+   * @param {Array} book
+   * @return {Object}
    */
-  static validateFile() {
-    const filename = 'jasmine/' + document.getElementById('filename_id').value;
-    const extension = filename.split('.').pop();
-    document.getElementById('uploadinfo_panel').removeAttribute('hidden');
-    let uploadInfoId = document.getElementById('uploadinfo_id');
-    if (extension === 'json') {
-      jQuery.getJSON(filename, (book) => {
-        const bookCounter = book.length;
-        if (bookCounter > 0 && typeof book === 'object') {
-          uploadInfoId.innerHTML = 'File uploaded successfully !';
-          uploadInfoId.className = 'green-text text-darken-3';
-          InvertedIndex.createIndex(book);
-        } else {
-          alert('No json object found !');
-        }
-      });
-    } else {
-      uploadInfoId.innerHTML = 'Oops! Invalid file Input detected!';
-      uploadInfoId.className = 'red-text text-darken-3';
-    }
-  }
-
-  static createIndex(book) {
-    let index = {};
-    let titleAndText = [];
-    let allUniqueTokens = {};
-    let allWords = ' ';
+  createIndex(book) {
     $.each(book, (index, value) => {
-      let titleText = value.title + ' ' + value.text + ' ';
-      let cleanTitleText = InvertedIndex.cleanWords(titleText);
-      allWords += cleanTitleText;
-      let uniqueBookWords = InvertedIndex.removeMultipleWords(cleanTitleText);
-      titleAndText[index] = uniqueBookWords;
+      this.titleText = value.title + ' ' + value.text + ' ';
+      let cleanTitleText = this.myinstance.cleanWords(this.titleText);
+      this.allWords += cleanTitleText;
+      let uniqueBookWords = this.myinstance.removeMultipleWords(cleanTitleText);
+      this.titleAndText[index] = uniqueBookWords;
     });
-    allUniqueTokens = InvertedIndex.removeMultipleWords(allWords).split(' ');
-    console.log(allUniqueTokens);
-    allUniqueTokens.forEach((token) => {
-      if (token !== '') {
-        titleAndText.forEach((book, bookIndex) => {
-          let bookArray = book.split(' ');
-          bookArray.forEach((bookToken) => {
+    this.allUniqueTokens = this.myinstance.removeMultipleWords(this.allWords).split(' ');
+    this.allUniqueTokens.forEach((token) => {
+      if (token !== '' && typeof token !== 'undefined') {
+        this.wordIndexes[token] = []; // create a key based on unique token
+        this.titleAndText.forEach((book, bookIndex) => {
+        let bookArray = book.split(' ');
+          bookArray.forEach((bookToken, bookTokenIndex) => {
             if (bookToken === token) {
-              console.log(token + ' found at doc ' + (bookIndex + 1));
+              this.wordIndexes[token].push(bookIndex);
             }
           });
         });
       }
     });
-  }
-
-  static cleanWords(titleAndText) {
-    return titleAndText.replace(/[^a-z\d\s]+/gi, ' ');
+   this.myinstance.displayToView(this.wordIndexes);
   }
   /**
-   * Function removeMultipleWords to
-   * remove multiple occurrences of
-   * words
+   * Search Index.
+   * @param {String} query query string
+   * @param {String} filterName name of index to be searched.
+   * @return {Object} searchResult
+  */
+  searchIndex() {
+
+  }
+  /**
+   * Get a particular index
+   * @param {String} jsonName
+   * @return {Object}
    */
-  static removeMultipleWords(words) {
-    let uniqueWords = words.toLowerCase().split(' ').sort().filter((item, i, allItems) => i === allItems.indexOf(item))
-      .join(' ');
-    return uniqueWords;
+  getIndex() {
+      return this.wordIndexes;
   }
 }

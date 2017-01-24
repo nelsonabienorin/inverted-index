@@ -1,65 +1,80 @@
 /**
- * An Inverted Inverted Application class
+ * An Inverted Index Application class
  * @class
  */
 class InvertedIndex {
   /**
    * class constructor
    * @constructor
-  **/
+   **/
   constructor() {
-    this.allfileIndex = {};
-    this.titleAndText = [];
-    this.allUniqueTokens = {};
-    this.allWords = ' ';
-    this.titleText = '';
-    this.wordIndexes = {};
-    this.myinstance = new InvertedIndexUtility ();
+    this.indexFile = {};
+    this.singleIndex = {};
+    this.allIndexFile = {};
   }
   /**
    * Create index
    * @param {Array} book
    * @return {Object}
    */
-  createIndex(book) {
-    $.each(book, (index, value) => {
-      this.titleText = value.title + ' ' + value.text + ' ';
-      let cleanTitleText = this.myinstance.cleanWords(this.titleText);
-      this.allWords += cleanTitleText;
-      let uniqueBookWords = this.myinstance.removeMultipleWords(cleanTitleText);
-      this.titleAndText[index] = uniqueBookWords;
+  createIndex(jsonArray, jsonName) {
+    jsonArray.forEach((obj, position) => {
+      // removes all special characters
+      const objTitle = obj.title.toLowerCase().match(/\w+/g);
+      const objText = obj.text.toLowerCase().match(/\w+/g);
+      // set method removes duplicate words and also return result as an array
+      let objTitleText = [...new Set([...objTitle, ...objText])];
+      this.bookIndex(objTitleText, position);
     });
-    this.allUniqueTokens = this.myinstance.removeMultipleWords(this.allWords).split(' ');
-    this.allUniqueTokens.forEach((token) => {
-      if (token !== '' && typeof token !== 'undefined') {
-        this.wordIndexes[token] = []; // create a key based on unique token
-        this.titleAndText.forEach((book, bookIndex) => {
-        let bookArray = book.split(' ');
-          bookArray.forEach((bookToken, bookTokenIndex) => {
-            if (bookToken === token) {
-              this.wordIndexes[token].push(bookIndex);
-            }
-          });
-        });
+    // allIndexFile object stores all the filenames as key with their  values as an array of content
+    this.allIndexFile[jsonName] = this.singleIndex;
+    let functionCallName='create';
+    validateobj.displayToView(this.singleIndex,functionCallName);
+     // singleIndex is re-initialised
+    this.singleIndex = {};
+  }
+  /**
+   * bookIndex
+   */
+  bookIndex(objTitleText, position) {
+    objTitleText.forEach((word) => {
+      // word does not exit
+      if (this.singleIndex[word]) {
+        if (this.singleIndex[word] !== position) {  // First occurence of token
+          this.singleIndex[word].push(position);
+        }
+      } else {
+        this.singleIndex[word] = [position]; // second occurence of token is pushed into existing object value
       }
     });
-   this.myinstance.displayToView(this.wordIndexes);
   }
   /**
    * Search Index.
    * @param {String} query query string
    * @param {String} filterName name of index to be searched.
    * @return {Object} searchResult
-  */
-  searchIndex() {
-
+   */
+  searchIndex(query, jsonName) {
+    query = query.toLowerCase().match(/\w+/g);
+    let searchResult = {};
+    query.forEach((word) => {
+      if (this.allIndexFile[jsonName][word]) {
+        searchResult[word] = this.allIndexFile[jsonName][word];
+      }
+    });
+    if (searchResult.length === 0) {
+      alert('No search result found for ' + query);
+    }
+    let functionCallName='search';
+     validateobj.displayToView(searchResult,functionCallName);
   }
   /**
-   * Get a particular index
-   * @param {String} jsonName
+   * getIndex
    * @return {Object}
    */
-  getIndex() {
-      return this.wordIndexes;
+  getIndex(jsonName) {
+    return this.allIndexFile[jsonName];
   }
 }
+// Create instance for InvertedIndexClass
+let invertedClassObj = new InvertedIndex();

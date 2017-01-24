@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="src/css/main.css">
 </head>
 
 <body ng-controller='inverted'>
@@ -44,25 +46,32 @@
           </div>
         </div>
       </form>
+      <select class="browser-default" id="selectfilename1">
+        <option value="" disabled selected>Select file</option>
+      </select>
       <br/>
       <!--<p>{{dtest}}</p> test
       <a class=" btn green"><i class='material-icons green'>file_upload</i>UPLOAD</a>-->
       <a class=" btn green" onclick="validateobj.validateFile()"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>      <br/> <br/>
       <!--div id="dynamictable"></div-->
-      <div id="dynamictable"></div>
+      <div id="createindextable"></div>
     </div>
     <div class="col s6">
       <!-- right side panel -->
       <div class="nav-wrapper">
         <form>
           <div class="input-field">
-            <input id="search" type="search" required>
+            <input id="search" type="search" value="" required>
+            <select class="browser-default" id="selectfilename2">
+              <option value="" disabled selected>Select File</option>
+            </select>
             <label for="search"><i class="material-icons">search</i></label>
             <i class="material-icons">close</i>
           </div> <br/>
-          <a class=" btn green"><i class="material-icons">search</i>SEARCH FILES</a>
+          <a class="btn green" onclick="validateobj.searchIndexTest()"><i class="material-icons" >search</i>SEARCH FILES</a>
         </form>
       </div>
+       <div id="searchindextable"></div>
     </div>
   </div>
   <!--Import angular js-->
@@ -71,8 +80,8 @@
   <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-  <script type="text/javascript" src="src/inverted-index.js"></script>
   <script type="text/javascript" src="src/app.js"></script>
+  <script type="text/javascript" src="src/inverted-index.js"></script>
 </body>
 
 </html>

@@ -1,9 +1,11 @@
 const gulp = require('gulp');
+const browserify = require('gulp-browserify');
+const rename = require('gulp-rename');
 const browserSync = require('browser-sync').create();
-//const BufferStreams = require('bufferstreams');
-//const jasmineBrowser = require('gulp-jasmine-browser');
+// const BufferStreams = require('bufferstreams');
+// const jasmineBrowser = require('gulp-jasmine-browser');
 
-gulp.task('browserSync', function () {
+gulp.task('browserSync', () => {
   browserSync.init({
     server: {
       baseDir: './',
@@ -13,13 +15,13 @@ gulp.task('browserSync', function () {
   });
 });
 
-//const eslint = require('gulp-eslint');
+// const eslint = require('gulp-eslint');
 // create a default task and just log a message
 // gulp.task('default', function() {
 //   return gutil.log('Gulp is running!')
 // });
 
-//gulp.watch('src/javascript/*.js', ['eslint']);
+// gulp.watch('src/javascript/*.js', ['eslint']);
 
 
 // gulp.task('lint', function () {
@@ -34,16 +36,22 @@ gulp.task('browserSync', function () {
 // });
 
 // configure which files to watch and what tasks to use on file changes
-gulp.task('default', ['browserSync']);
+gulp.task('default', ['browserSync', 'watch', 'scripts']);
 
-gulp.task('watch', function () {
-  //gulp.watch('./scss/*.scss', ['sass']);
-  gulp.watch('.src/css/*.css', browserSync.reload);
-  gulp.watch('src/index.html', browserSync.reload);
-  //   gulp.watch(['./src/*.js', './jasmine/spec/*.js'], browserSync.reload);
+gulp.task('watch', () => {
+  // gulp.watch('./scss/*.scss', ['sass']);
+  gulp.watch('src/css/*.css', browserSync.reload);
+  gulp.watch('*.html', browserSync.reload);
+  gulp.watch('.karma.conf.js', browserSync.reload);
+  gulp.watch(['./src/*.js', './jasmine/spec/*.js'], browserSync.reload);
 });
 
-
+gulp.task('scripts', () => {
+  gulp.src('jasmine/spec/inverted-index-test.js')
+   .pipe(browserify())
+   .pipe(rename('bundle.js'))
+   .pipe(gulp.dest('jasmine/build'));
+});
 // gulp.task('jasmine', () => {
 //   const filesForTest = ['./jasmine/spec/less/**/*'];
 //     gulp.src(filesForTest)

@@ -4,10 +4,16 @@
  * directive
  **/
 
-const app = angular.module('Invertedindex', [])
+const app = angular.module('InvertedIndex', []);
 
 app.controller('inverted', ($scope) => {
+  // $scope makes the variable global
+  $scope.test = 'Am global!'
 
-  $scope.test = 'Nelson Rotimi' //$scope makes the variable global
+});
 
+app.controller ('validateController', ($scope) => {
+    $scope.send = function () {
+      console.log("it works");
+    }
 });

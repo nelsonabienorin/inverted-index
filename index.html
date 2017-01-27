@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app='Invertedindex'>
+<html ng-app='InvertedIndex'>
 
 <head>
   <!--Import Google Icon Font-->
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="src/css/main.css">
 </head>
 
-<body ng-controller='inverted'>
+<body>
   <!-- Navbar goes here -->
   <nav>
     <div class="nav-wrapper green">
@@ -32,13 +32,13 @@
   </div>
   <div class="row">
     <!-- Left Layout -->
-    <div class="col s6">
+    <div class="col s6" ng-controller='validateController'>
       <form action="#">
         <div class="file-field input-field">
           <div class="btn green">
             <i class="material-icons">insert_drive_file</i>
             <span>File</span>
-            <input type="file" id="files_id" multiple accept=".json">
+            <input type="file" id="files_id"  accept=".json">
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text" id="filename_id" placeholder="Upload one or more files"
@@ -50,12 +50,12 @@
         <option value="" disabled selected>Select file</option>
       </select>
       <br/>
-      <!--<p>{{dtest}}</p> test
-      <a class=" btn green"><i class='material-icons green'>file_upload</i>UPLOAD</a>-->
-      <a class=" btn green" onclick="validateobj.validateFile()"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>      <br/> <br/>
-      <!--div id="dynamictable"></div-->
-      <div id="createindextable"></div>
+      <!--<a class=" btn green" ng-click="send()"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>-->
+      <a class=" btn green" onclick="validateobj.validateFile()"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>
+      <br/>  <br/>  <br/>
+       <div id="createindextable"></div>
     </div>
+
     <div class="col s6">
       <!-- right side panel -->
       <div class="nav-wrapper">
@@ -71,7 +71,9 @@
           <a class="btn green" onclick="validateobj.searchIndexTest()"><i class="material-icons" >search</i>SEARCH FILES</a>
         </form>
       </div>
-       <div id="searchindextable"></div>
+      <br/>
+      <br/>
+      <div id="searchindextable"></div>
     </div>
   </div>
   <!--Import angular js-->
@@ -80,6 +82,7 @@
   <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
   <script type="text/javascript" src="src/app.js"></script>
   <script type="text/javascript" src="src/inverted-index.js"></script>
 </body>

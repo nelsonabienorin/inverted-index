@@ -15,9 +15,9 @@
 <body>
   <!-- Navbar goes here -->
   <nav>
-    <div class="nav-wrapper green">
-      <a href="#" class="brand-logo left">Inverted Index</a>
-      <a href="#" class="right">About The App</a>
+    <div class="nav-wrapper cyan darken-4">
+      <a href="#" class="brand-logo left"> &nbsp; Inverted Index</a>
+      <a href="#modal1" class="right">Instructions</a>
       <i class="material-icons right">info_outline</i>
     </div>
   </nav>
@@ -35,10 +35,10 @@
     <div class="col s6" ng-controller='validateController'>
       <form action="#">
         <div class="file-field input-field">
-          <div class="btn green">
+          <div class="btn cyan darken-4">
             <i class="material-icons">insert_drive_file</i>
             <span>File</span>
-            <input type="file" id="files_id"  accept=".json">
+            <input type="file" id="files_id" accept=".json">
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text" id="filename_id" placeholder="Upload one or more files"
@@ -46,29 +46,26 @@
           </div>
         </div>
       </form>
-      <select class="browser-default" id="selectfilename1">
+      <select class="browser-default cyan darken-4" id="selectfilename1">
         <option value="" disabled selected>Select file</option>
       </select>
       <br/>
-      <!--<a class=" btn green" ng-click="send()"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>-->
-      <a class=" btn green" onclick="validateobj.validateFile()"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>
-      <br/>  <br/>  <br/>
-       <div id="createindextable"></div>
+      <a class=" btn cyan darken-4" id="create_id"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>
+      <br/> <br/> <br/>
+      <div id="createindextable"></div>
     </div>
-
     <div class="col s6">
       <!-- right side panel -->
       <div class="nav-wrapper">
         <form>
           <div class="input-field">
-            <input id="search" type="search" value="" required>
-            <select class="browser-default" id="selectfilename2">
+            <input id="search" type="search" value="" placeholder="search files here" required>
+            <select class="browser-default cyan darken-4" id="selectfilename2">
               <option value="" disabled selected>Select File</option>
             </select>
-            <label for="search"><i class="material-icons">search</i></label>
-            <i class="material-icons">close</i>
+            <label for="search"></label>
           </div> <br/>
-          <a class="btn green" onclick="validateobj.searchIndexTest()"><i class="material-icons" >search</i>SEARCH FILES</a>
+          <a class="btn cyan darken-4" id="search_id"><i class="material-icons" >search</i>SEARCH FILES</a>
         </form>
       </div>
       <br/>
@@ -76,6 +73,36 @@
       <div id="searchindextable"></div>
     </div>
   </div>
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal cyan darken-4">
+    <div class="modal-content white-text">
+      <h5><i class="material-icons right">info_outline</i>How To Use This App</h5>
+      <ol>
+        <li> Choose a JSON File from your directory</li>
+        <li>Use the "Create Index" Button to have the index created and displayed </li>
+        <li>Use the "Search Files" Button to check the location of a word in the index
+        </li>
+        <li> You can also select an existing file from the select box to either "Create
+          Index"" or "Search Index".
+        </li>
+      </ol>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect cyan darken-4 btn-flat white-text">OK</a>
+    </div>
+  </div>
+  <!-- End of Modal -->
+  <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/>
+  <!-- Beginning  of footer -->
+  <footer class="page-footer cyan darken-4">
+    <div class="footer-copyright">
+      <div class="container white-text">
+        © 2017 Inverted Index Application
+        <a class="grey-text text-lighten-4 right" href="https://github.com/andela-nrotimi/inverted-index">My GitHub</a>
+      </div>
+    </div>
+  </footer>
+  <!-- End of footer -->
   <!--Import angular js-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
   <script src="controllers/app.js"></script>
@@ -83,8 +110,9 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
-  <script type="text/javascript" src="src/app.js"></script>
   <script type="text/javascript" src="src/inverted-index.js"></script>
+  <script type="text/javascript" src="src/app.js"></script>
+  <script type="text/javascript" src="src/eventListener.js"></script>
 </body>
 
 </html>

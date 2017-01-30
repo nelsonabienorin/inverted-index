@@ -13,7 +13,7 @@ app.controller('inverted', ($scope) => {
 });
 
 app.controller ('validateController', ($scope) => {
-    $scope.send = function () {
+    $scope.validateFile = function () {
       console.log("it works");
     }
 });

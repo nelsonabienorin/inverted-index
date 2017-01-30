@@ -4,21 +4,26 @@
   "env": {
     "node": true,
     "es6": true,
-    "mocha": true
+    "jasmine": true
   },
   "rules": {
+    "guard-for-in":0,
     "import/no-unresolved": 0,
-    "max-len":[1, 80, 2],
+    "max-len": [1, 80, 2],
     "indent": [1, 2],
     "one-var": 0,
     "arrow-body-style": 0,
     "one-var-declaration-per-line": 0,
     "new-cap": 0,
+    "no-useless-escape": 0,
     "consistent-return": 0,
     "no-param-reassign": 0,
     "comma-dangle": 0,
+    "class-methods-use-this": 0,
     "curly": [1, "multi-line"],
-    "no-shadow": [1, { "allow": ["req", "res", "err"] }],
+    "no-shadow": [1, {
+      "allow": ["req", "res", "err"]
+    }],
     "valid-jsdoc": [1, {
       "requireReturn": true,
       "requireReturnType": true,
@@ -26,11 +31,11 @@
       "requireReturnDescription": true
     }],
     "require-jsdoc": [1, {
-        "require": {
-            "FunctionDeclaration": true,
-            "MethodDefinition": true,
-            "ClassDeclaration": true
-        }
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": true,
+        "ClassDeclaration": true
+      }
     }]
   }
 }

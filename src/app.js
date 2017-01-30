@@ -2,7 +2,7 @@
  * An Inverted Index Utility class
  * @class
  */
-class InvertedIndexUtility {
+class App {
   /**
    * class constructor
    * @constructor
@@ -14,6 +14,7 @@ class InvertedIndexUtility {
     this.rawFile = {};
     this.allFileUploads = {};
     this.msg = '';
+    this.fileHighestLength = {};
   }
   /**
    * Function validateFile to
@@ -51,7 +52,7 @@ class InvertedIndexUtility {
       if (content.indexOf('title') === -1 || content.indexOf('text') === -1) {
         this.msg = 'Invalid content found in JSON file !';
         this.notificationBoard(this.msg, 'error');
-        return;
+        return false;
       }
       const fileContent = JSON.parse(content);
       if (fileContent.length === 0) {
@@ -83,27 +84,42 @@ class InvertedIndexUtility {
    * @param:{object} result
    * @param:{string} functionCallName
    */
-  displayToView(result, functionCallName) {
-    $(`#${functionCallName }indextable`).empty();
+  displayToView(result, functionCallName, filename) {
+    let objWithHighIndex = 0;
+    $(`#${functionCallName}indextable`).empty();
     this.content = "<table class='striped'>";
     this.icon = "<i class='material-icons'>done</i>";
     if (typeof result !== 'undefined') {
-      this.content += '<tr><th>Word</th><th>Doc1</th><th>Doc2</th></tr>';
-      for (const key in result) {
-        // displays the token
-        this.content += `<td>${key }</td>`;
-        // an array of tokens location in document
-        const docLocation = result[key];
-        if (docLocation.length === 1) {
-          if (docLocation[0] === 0) {
-            this.content += `<td>${this.icon }</td><td></td>`;
-          } else {
-            this.content += `<td></td><td>${this.icon}</td>`;
-          }
-          this.content += '</tr>';
-        } else {
-          this.content += `<td>${this.icon }</td><td>${this.icon }</td></tr>`;
+      this.content += '<tr class=\'card\' green text-white><th>Word</th>';
+      // This part loops through to get the object with
+      // the highest index
+      if (this.fileHighestLength[filename]) {
+        objWithHighIndex = this.fileHighestLength[filename];
+      } else {
+        for (let term in result) {
+          objWithHighIndex = (result[term].length > objWithHighIndex) ? result[term].length : objWithHighIndex;
         }
+      }
+      this.fileHighestLength[filename] = objWithHighIndex;
+      // this generates/builds the header
+      for (let i = 1; i <= objWithHighIndex; i += 1) {
+        this.content += `<th>Doc ${i} </th>`;
+      }
+      this.content += '</tr>';
+      // this handles the building of the body and its content
+      const found = this.icon;
+      const notFound = 'X';
+      for (let term in result) {
+        this.content += `<tr><td>  ${term}  </td>`;
+        let curArr = result[term];
+        for (let j = 0; j < objWithHighIndex; j++) {
+          if (curArr.indexOf(j) >= 0) {
+            this.content += `<td class = 'green-text'> ${found} </td>`;
+          } else {
+            this.content += `<td class = 'red-text'> ${notFound} </td>`;
+          }
+        }
+        this.content += '</tr>';
       }
       this.content += '</table>';
       $(`#${functionCallName}indextable`).append(this.content);
@@ -140,7 +156,7 @@ class InvertedIndexUtility {
       this.notificationBoard(this.msg, 'error');
     } else {
       if (typeof this.file === 'undefined' || this.file.name === 'undefined') {
-        this.msg = 'You have to upload file to create Index!';
+        this.msg = 'You have to firstly Create Index!';
         this.notificationBoard(this.msg, 'error');
       }
       if (this.file.name.length > 0 && searchQuery.length > 0) {
@@ -184,21 +200,3 @@ class InvertedIndexUtility {
     $(`#` + tableName + `indextable`).empty();
   }
 }
-// Create instance for InvertedIndexUtility
-const validateobj = new InvertedIndexUtility();
-// An event listener to listen to change in uploaded file
-document.getElementById('files_id').addEventListener('change', (e) => {
-  validateobj.emptyTable('create');
-  validateobj.hideNotificationBoard();
-});
-// An event listener to listen to change in select box
-document.getElementById('selectfilename1').addEventListener('change', (e) => {
-  validateobj.emptyTable('create');
-  const selectedFile = $(`#selectfilename1`).val();
-  const functionCallName = 'create';
-  if (invertedClassObj.allIndexFile[selectedFile]) {
-    validateobj.displayToView(invertedClassObj.allIndexFile[selectedFile], functionCallName);
-    const msg = 'Index  Successfully Created !';
-    validateobj.notificationBoard(msg, 'success');
-  }
-});

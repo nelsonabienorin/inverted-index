@@ -1,11 +1,11 @@
 
-
-    "name": "Alice in Wonderland",
+[
+  {  "name" : "Alice in Wonderland",
     "value": "Alice falls into a rabbit hole and enters a world full of imagination."
-
-
-
-    "name": "The Lord of the Rings: The Fellowship of the Ring.",
+  }
+,
+   { "name": "The Lord of the Rings: The Fellowship of the Ring.",
     "value": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
 
-
+   }
+]

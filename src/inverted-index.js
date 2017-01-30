@@ -37,7 +37,8 @@ class InvertedIndex {
       // allIndexFile object stores all the filenames as key with their  values as an array of content
       this.allIndexFile[fileName] = this.singleIndex;
       const functionCallName = 'create';
-      validateobj.displayToView(this.singleIndex, functionCallName);
+      // return needed for displaytoView
+      appObj.displayToView(this.singleIndex, functionCallName, fileName);
       // singleIndex is re-initialised
       this.singleIndex = {};
       return true;
@@ -45,7 +46,7 @@ class InvertedIndex {
       return false;
     }
   }
-
+  // book Index is not supose to be here
   /**
    * Function bookIndex
    * @param {Array} objTitleText
@@ -77,8 +78,9 @@ class InvertedIndex {
       query = query.toLowerCase().match(/\w+/g);
       if (query === null) {
         this.msg = 'You have to enter a valid input!!';
-        validateobj.notificationBoard(this.msg, 'error');
+        appObj.notificationBoard(this.msg, 'error');
       }
+      let tokenWithHighIndex = 0;
       query.forEach((word) => {
         if (typeof this.allIndexFile[fileName] !== 'undefined' && this.allIndexFile[fileName][word]) {
           this.searchResult[word] = this.allIndexFile[fileName][word];
@@ -88,11 +90,11 @@ class InvertedIndex {
       });
       if (Object.keys(this.searchResult).length === 0) {
         this.msg = 'No search result found for : ' + query;
-        validateobj.notificationBoard(this.msg, 'error');
-        validateobj.emptyTable('search');
+        appObj.notificationBoard(this.msg, 'error');
+        appObj.emptyTable('search');
       } else {
         const functionCallName = 'search';
-        validateobj.displayToView(this.searchResult, functionCallName);
+        appObj.displayToView(this.searchResult, functionCallName, fileName);
       }
     }
   }
@@ -104,5 +106,3 @@ class InvertedIndex {
     return this.allIndexFile[jsonName];
   }
 }
-// Create instance for InvertedIndexClass
-let invertedClassObj = new InvertedIndex();

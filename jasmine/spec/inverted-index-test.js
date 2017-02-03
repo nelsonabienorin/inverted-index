@@ -1,68 +1,68 @@
-const invertedClassObj1 = new InvertedIndex();
-const appObj1 = new App();
-console.log(appObj1);
-// const correctBook = require('../books.json');
-const wrongBook = require('../wrongFormat.json');
-// const emptyBook = require('../emptyBook.json');
-// const uploadedFile= document.getElementById('files_id').files[0];
-// console.log(invertedClassObj1.myTest);
 
-// describe('Inverted Index Class', () => {
-//   it('Should be an instance of a class', () => {
-//     expect(invertedClassObj1 instanceof InvertedIndex).toBe(true);
-//     expect(invertedClassObj1 instanceof Object).toBe(true);
-//     expect(typeof invertedClassObj1).toBe('object');
-//   });
-// });
+const correctBook = [
+  {
+    "title": "Alice in Wonderland",
+    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
+  },
+
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring.",
+    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+  }
+];
+const emptyBook= [
+  {
+    " ": " ",
+    " ": " "
+  },
+
+  {
+    " ": "",
+    " ": " "
+  }
+];
+const json2 = [
+  {
+    "title": "Nelson in Auckland",
+    "text": "Debby picks up the coconut from the ,top of the chair"
+  },
+
+  {
+    "title": "A trip to Mallaise Island",
+    "text": "So many dangerous animals were found on the way like snakes; mamba type"
+  }
+];
+describe('Read book data', () => {
+const emptyArray = [];
+const invertedobj = new InvertedIndex();
+const bookIndex = invertedobj.createIndex('correctBook.json',correctBook);
 
 describe('Read book data', () => {
-  it('should return false for invalid JSON file', () => {
-    //sexpect(appObj1.validateFile(wrongBook).toEqual(false));
+  it('should return true if book is empty', () => {
+    expect(invertedobj.isJsonEmpty(emptyArray)).toBeTruthy();
   });
-  // it('Should return false for an invalid JSON array with invalid key', () => {
-  //   expect(appObj.validateFile(wrongBook).toEqual(false));
-  // });
-  // it('Should return false for an invalid json file with empty keys and values', () => {
-  //   expect(appObj.validateFile(wrongBook).toEqual(false));
-  // });
-  // it('Should return true for valid JSON array', () => {
-  //   expect(appObj.validateFile(correctBook).toEqual(true));
-  // });
-
-  // it('Should return false for wrong key in JSON array', () => {
-  //   expect(appObj.validateFile(wrongBook).toEqual(false));
-  // });
+  it('Should return false if book is not empty', () => {
+    expect(invertedobj.isJsonEmpty(correctBook)).toBeFalsy();
+  });
+  it('Should return false if book has empty key and value', () => {
+    expect(invertedobj.createIndex('emptyBook.json', emptyBook)).toBeFalsy();
+  });
 });
 
-// describe('Populate Index', () => {
-//   it('Should create index once JSON file has been read', () => {
-//     expect(invertedIndex.createIndex(correctBook)[0]).toEqual(true);
-//   });
+describe('Populate Index', () => {
+  it('should read the book and make sure it is an instance of an object', () => {
+    expect(typeof invertedobj.createIndex('correctBook.json', correctBook)).toEqual('object');
+  });
 
-//   it('Should ensure index is correct', () => {
-//     expect(invertedIndex.createIndex(correctBook)[1]).toEqual(true);
-//   });
-// });
+  it('Should ensure index is correct', () => {
+    expect(bookIndex.alice).toEqual({ 0: true });
+  });
+});
 
-
-// describe('Search Index', () => {
-//   it('should have searchIndex method accessible in the class', () => {
-//     expect(invertedIndex.searchIndex).toBeDefined();
-//   });
-
-//   it('Should return the correct results when searched', () => {
-//     expect(invertedIndex.createIndex(correctBook)[0]).toEqual(true);
-//   });
-
-//   it('Should handle an array of search terms', () => {
-//     expect(invertedIndex.createIndex(correctBook)[1]).toEqual(true);
-//   });
-
-//   it('Should handle a varied number of search terms as arguments', () => {
-//     expect(invertedIndex.createIndex(correctBook)[1]).toEqual(true);
-//   });
-
-//   it('Should Ensure searchIndex goes through all indexed files if a filename is not passed', () => {
-//     expect(invertedIndex.createIndex(correctBook)[1]).toEqual(true);
-//   });
-// });
+describe('Search Index', () => {
+  console.log(invertedobj.searchIndex('alice', 'correctBook.json'));
+  it('Should return an array of the indices of the correct objects that contain the words in the search query', () => {
+    expect(invertedobj.searchIndex('alice', 'correctBook.json')).toEqual({ alice: { 0: true } });
+  });
+});
+});

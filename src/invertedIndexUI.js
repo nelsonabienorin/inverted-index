@@ -1,12 +1,59 @@
-//class InvertedIndexUI {
+class InvertedIndexUI {
+
+  constructor() {
+    this.content = '';
+    this.icon = '';
+    this.allFileUploads = {};
+    this.indexedFile = {};
+    this.fileHighestLength = {};
+  }
   getSelectedFileToCreate() {
-    return $(`#selectfilename1`).val();
+    return $('#selectfilename1').val();
   }
-//}
-getSelectedFileToSearch() {
-    return $(`#selectfilename2`).val();
+
+  getSelectedFileToSearch() {
+    return $('#selectfilename2').val();
   }
-/**
+
+  fileReader(file) {
+    const fileReader = new FileReader();
+    this.allFileUploads = invertedClassObj.allFiles;
+    fileReader.onload = () => {
+      const content = fileReader.result;
+      const jsonContent = JSON.parse(content);
+      if (content.indexOf('title') === -1 || content.indexOf('text') === -1) {
+        this.msg = 'Invalid content found in JSON file !';
+        invertedUIObj.notificationBoard(this.msg, 'error');
+        return false;
+      }
+      if (jsonContent.length === 0) {
+        this.msg = 'File cannot be EMPTY!';
+        invertedUIObj.notificationBoard(this.msg, 'error');
+      } else {
+        if (this.allFileUploads[file.name]) {
+          this.msg = 'File already Exist !';
+          invertedUIObj.notificationBoard(this.msg, 'error');
+        } else {
+          this.msg = 'File uploaded successfully !';
+          invertedUIObj.notificationBoard(this.msg, 'success');
+          this.allFileUploads[file.name] = jsonContent;
+          invertedUIObj.populateSelectBox(file.name);
+          const selectedFile = this.getSelectedFileToCreate();
+          let fileNameToSend = '';
+          if (selectedFile !== null) {
+            fileNameToSend = selectedFile;
+          } else {
+            fileNameToSend = file.name;
+          }
+          this.indexedFile = invertedClassObj.createIndex(fileNameToSend, jsonContent);
+          const functionCallName = 'create';
+          this.displayToView(this.indexedFile, functionCallName, fileNameToSend);
+        }
+      }
+    };
+    fileReader.readAsText(file);
+  }
+  /**
    * Function displayToView
    * output result to html
    * @param:{object} result
@@ -22,10 +69,11 @@ getSelectedFileToSearch() {
       // This part loops through to get the object with
       // the highest index
       if (this.fileHighestLength[filename]) {
+        console.log('this filehighest filename');
         objWithHighIndex = this.fileHighestLength[filename];
       } else {
         for (let term in result) {
-          objWithHighIndex = (result[term].length > objWithHighIndex) ? result[term].length : objWithHighIndex;
+          objWithHighIndex = (Object.keys(result[term]).length > objWithHighIndex) ? Object.keys(result[term]).length : objWithHighIndex;
         }
       }
       this.fileHighestLength[filename] = objWithHighIndex;
@@ -41,7 +89,7 @@ getSelectedFileToSearch() {
         this.content += `<tr><td>  ${term}  </td>`;
         let curArr = result[term];
         for (let j = 0; j < objWithHighIndex; j++) {
-          if (curArr.indexOf(j) >= 0) {
+          if (curArr[j] === true) {
             this.content += `<td class = 'green-text'> ${found} </td>`;
           } else {
             this.content += `<td class = 'red-text'> ${notFound} </td>`;
@@ -86,6 +134,7 @@ getSelectedFileToSearch() {
     option2.text = filename;
     selectFilename1.add(option1);
     selectFilename2.add(option2);
+    $('.all').show();
   }
   /**
    * Function hideNotificationBoard to
@@ -103,3 +152,4 @@ getSelectedFileToSearch() {
   emptyTable(tableName) {
     $(`#` + tableName + `indextable`).empty();
   }
+}

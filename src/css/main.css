@@ -2,6 +2,14 @@
       width: 30% !important;
       color: white;
     }
+
     .padInstr {
-      margin-right:15px !important;
+      margin-right: 15px !important;
+    }
+
+    #uploadinfo_panel {
+      border-radius: 15px !important;
+      border-color: grey !important;
+      /*border-style: solid;
+      border-color: #e3f2fd;*/
     }

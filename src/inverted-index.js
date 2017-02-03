@@ -1,109 +1,160 @@
 /**
- * An Inverted Index Application class
+ * InvertedIndexClass class
  * @class
  */
 class InvertedIndex {
-  /**
-   * class constructor
-   * @constructor
-   **/
+
   constructor() {
-    this.indexFile = {};
-    this.singleIndex = {};
-    this.allIndexFile = {};
-    this.searchResult = {};
-    this.msg = '';
-    this.myTest = 'my test';
+    this.allFiles = {};
+    this.indexedFIles = {};
   }
   /**
-   * Create index
-   * @param {Array} jsonArray
-   * @param {string} fileName
-   * @return {Boolean}
+   * validate
+   * @param {Object} json
+   * @return{Boolean}
    */
-  createIndex(jsonArray, fileName) {
-    if (typeof jsonArray === 'object' && typeof fileName === 'string' && jsonArray.length !== 0 && fileName.length !== 0) {
-      jsonArray.forEach((obj, position) => {
-        if (obj.title && obj.text) {
-          // removes all special characters
-          const objTitle = obj.title.toLowerCase().match(/\w+/g);
-          const objText = obj.text.toLowerCase().match(/\w+/g);
-          // set method removes duplicate words and also return result as an array
-          const objTitleText = [...new Set([...objTitle, ...objText])];
-          this.bookIndex(objTitleText, position);
-        } else {
-          return false;
-        }
-      });
-      // allIndexFile object stores all the filenames as key with their  values as an array of content
-      this.allIndexFile[fileName] = this.singleIndex;
-      const functionCallName = 'create';
-      // return needed for displaytoView
-      appObj.displayToView(this.singleIndex, functionCallName, fileName);
-      // singleIndex is re-initialised
-      this.singleIndex = {};
-      return true;
+  validate(json) {
+    console.log('finally in validate');
+    for (let item of json) {
+      if (!item.title && !item.text) {
+        return false;
+      }
+    }
+    return true;
+  }
+  /**
+   * populateIndex
+   * @param {string} fileName
+   * @param {Object} fileContent
+   */
+  populateIndex(fileName, fileContent) {
+    let uniqueWords = [];
+    let objTitle = '';
+    let objText = '';
+    let objTitleText;
+    fileContent.forEach((obj) => {
+      if (obj.title && obj.text) {
+        objTitle = this.removeSpecialXters(obj.title);
+        objText = this.removeSpecialXters(obj.text);
+        objTitleText = `${objTitle},${objText}`;
+        uniqueWords.push(this.removeDuplicateWords(objTitle, objText));
+      }
+    });
+    uniqueWords.forEach((singlePage, position) => {
+      this.arrangeIndex(singlePage, position);
+    });
+  }
+  /**
+   * createIndex
+   * @param {string} fileName
+   * @param {Object} fileContent
+   */
+  createIndex(fileName, fileContents) {
+    const validateJson = this.validate(fileContents);
+    if (validateJson) {
+      this.populateIndex(fileName, fileContents);
     } else {
       return false;
     }
+    this.allFiles[fileName] = this.indexedFIles;
+    this.indexedFIles = {};
+    return this.allFiles[fileName];
   }
-  // book Index is not supose to be here
   /**
-   * Function bookIndex
-   * @param {Array} objTitleText
-   * @param {Number} position
+   * getIndex
+   * @param   {string} fileName
+   * @returns {Object} allFiles
    */
-  bookIndex(objTitleText, position) {
-    objTitleText.forEach((word) => {
-      // word does not exit
-      if (this.singleIndex[word]) {
-        if (this.singleIndex[word] !== position) {
-          // First occurence of token
-          this.singleIndex[word].push(position);
+  getIndex(fileName) {
+    return this.allFiles[fileName];
+  }
+  /**
+   * getIndex
+   * @param   {Object} obj
+   * @returns {Object} obj
+   */
+  removeSpecialXters(obj) {
+    return obj.toLowerCase().match(/\w+/g);
+  }
+  /**
+   * removeDuplicateWords
+   * @param   {Object} objTitle
+   * @param   {Object} objText
+   * @returns {Object}
+   */
+  removeDuplicateWords(objTitle, objText) {
+    return [...new Set([...objTitle, ...objText])];
+  }
+  /**
+   * arrangeIndex
+   * @param {Object} singlePage
+   * @param {number} position
+   */
+  arrangeIndex(singlePage, position) {
+    singlePage.forEach((word) => {
+      if (this.indexedFIles[word]) {
+        if (!this.indexedFIles[word][position]) {
+          this.indexedFIles[word][position] = true;
         }
       } else {
-        // second occurence of token is pushed into existing object value
-        this.singleIndex[word] = [position];
+        let oneIndex = {};
+        oneIndex[position] = true;
+        this.indexedFIles[word] = oneIndex;
       }
     });
   }
   /**
-   * Search Index.
-   * @param {String} query
-   * @param {String} filterName
-   * @return {Object} searchResult
+   * searchIndex
+   * @param   {String} input
+   * @param   {String} fileName
+   * @returns {Object} searchResult
    */
-  searchIndex(query, fileName) {
-    this.searchResult = {};
-    if ((typeof query && typeof fileName) === 'string' || typeof query === 'object') {
-      query = query.toLowerCase().match(/\w+/g);
-      if (query === null) {
-        this.msg = 'You have to enter a valid input!!';
-        appObj.notificationBoard(this.msg, 'error');
+  searchIndex(input, fileName) {
+    let searchResult = {};
+    let allSearchResult = {};
+    let query = this.removeSpecialXters(input);
+    let uniqueQuery = this.removeDuplicateWords(query, []);
+    if (fileName === 'all') {
+      for (let key in this.allFiles) {
+        let searchResultKey = {};
+        let searchSingleJson = this.allFiles[key];
+
+        uniqueQuery.forEach((eachQuery) => {
+          if (eachQuery in searchSingleJson) {
+            searchResultKey[eachQuery] = searchSingleJson[eachQuery];
+          } else {
+            searchResultKey[eachQuery] = {
+              0: false
+            };
+          }
+        });
+       // searchResult[key] = searchResultKey;
+      //  generates with the tokens the filename
+       searchResult = searchResultKey;
       }
-      let tokenWithHighIndex = 0;
-      query.forEach((word) => {
-        if (typeof this.allIndexFile[fileName] !== 'undefined' && this.allIndexFile[fileName][word]) {
-          this.searchResult[word] = this.allIndexFile[fileName][word];
+    } else {
+      uniqueQuery.forEach((word) => {
+        if (typeof this.allFiles[fileName] !== 'undefined' && this.allFiles[fileName][word]) {
+          searchResult[word] = this.allFiles[fileName][word];
         } else {
-          return false;
+          searchResult[word] = {
+            0: false
+          };
         }
       });
-      if (Object.keys(this.searchResult).length === 0) {
-        this.msg = 'No search result found for : ' + query;
-        appObj.notificationBoard(this.msg, 'error');
-        appObj.emptyTable('search');
-      } else {
-        const functionCallName = 'search';
-        appObj.displayToView(this.searchResult, functionCallName, fileName);
-      }
     }
+    return searchResult;
   }
   /**
-   * getIndex
-   * @return {Object}
+   * isJsonEmpty
+   * @param   {Object} book
+   * @returns {Boolean}
    */
-  getIndex(jsonName) {
-    return this.allIndexFile[jsonName];
+  isJsonEmpty(book) {
+    if (book.length === 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

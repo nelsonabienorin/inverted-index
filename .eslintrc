@@ -24,6 +24,7 @@
     "no-shadow": [1, {
       "allow": ["req", "res", "err"]
     }],
+    "no-undef": 0,
     "valid-jsdoc": [1, {
       "requireReturn": true,
       "requireReturnType": true,

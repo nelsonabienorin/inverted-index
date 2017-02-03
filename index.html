@@ -46,7 +46,7 @@
           </div>
         </div>
       </form>
-      <select class="browser-default cyan darken-4" id="selectfilename1">
+      <select class="browser-default cyan darken-4 booklist" id="selectfilename1" name="booklist">
         <option value="" disabled selected>Select file</option>
       </select>
       <br/>
@@ -60,8 +60,9 @@
         <form>
           <div class="input-field">
             <input id="search" type="search" value="" placeholder="search files here" required>
-            <select class="browser-default cyan darken-4" id="selectfilename2">
+            <select class="browser-default cyan darken-4 booklist" id="selectfilename2">
               <option value="" disabled selected>Select File</option>
+              <option  class="all" value="all" hidden>all</option>
             </select>
             <label for="search"></label>
           </div> <br/>
@@ -110,10 +111,10 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
-  <script type="text/javascript" src="src/eventListener.js"></script>
   <script type="text/javascript" src="src/util.js"></script>
   <script type="text/javascript" src="src/invertedIndexUI.js"></script>
   <script type="text/javascript" src="src/inverted-index.js"></script>
+  <script type="text/javascript" src="src/eventListener.js"></script>
 </body>
 
 </html>

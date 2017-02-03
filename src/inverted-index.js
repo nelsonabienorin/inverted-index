@@ -14,7 +14,6 @@ class InvertedIndex {
    * @return{Boolean}
    */
   validate(json) {
-    console.log('finally in validate');
     for (let item of json) {
       if (!item.title && !item.text) {
         return false;
@@ -123,15 +122,14 @@ class InvertedIndex {
           if (eachQuery in searchSingleJson) {
             searchResultKey[eachQuery] = searchSingleJson[eachQuery];
           } else {
-            searchResultKey[eachQuery] = {
-              0: false
-            };
+            searchResultKey[eachQuery] = { 0: false };
           }
         });
-       // searchResult[key] = searchResultKey;
+        searchResult[key] = searchResultKey;
       //  generates with the tokens the filename
-       searchResult = searchResultKey;
+      // searchResult = searchResultKey;|
       }
+      return searchResult;
     } else {
       uniqueQuery.forEach((word) => {
         if (typeof this.allFiles[fileName] !== 'undefined' && this.allFiles[fileName][word]) {

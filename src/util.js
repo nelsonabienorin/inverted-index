@@ -47,10 +47,8 @@ class Util {
       invertedUIObj.notificationBoard(this.msg, 'error');
       return false;
     }
-    // console.log('before calling fileReader');
     invertedUIObj.fileReader(this.file);
   }
-
   /**
    * Function searchIndexTest to
    * validate if query input

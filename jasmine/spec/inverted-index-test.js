@@ -35,7 +35,7 @@ const json2 = [
 describe('Read book data', () => {
 const emptyArray = [];
 const invertedobj = new InvertedIndex();
-const bookIndex = invertedobj.createIndex('correctBook.json',correctBook);
+const bookIndex = invertedobj.createIndex('correctBook.json', correctBook);
 
 describe('Read book data', () => {
   it('should return true if book is empty', () => {
@@ -60,7 +60,6 @@ describe('Populate Index', () => {
 });
 
 describe('Search Index', () => {
-  console.log(invertedobj.searchIndex('alice', 'correctBook.json'));
   it('Should return an array of the indices of the correct objects that contain the words in the search query', () => {
     expect(invertedobj.searchIndex('alice', 'correctBook.json')).toEqual({ alice: { 0: true } });
   });

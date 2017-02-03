@@ -61,6 +61,7 @@ class InvertedIndexUI {
    */
   displayToView(result, functionCallName, filename) {
     let objWithHighIndex = 0;
+    console.log(result);
     $(`#${functionCallName}indextable`).empty();
     this.content = "<table class='striped'>";
     this.icon = "<i class='material-icons'>done</i>";
@@ -141,8 +142,8 @@ class InvertedIndexUI {
    * hide notification
    */
   hideNotificationBoard() {
-    let panelId = document.getElementById('uploadinfo_panel');
-    let attr = document.createAttribute('hidden');
+    const panelId = document.getElementById('uploadinfo_panel');
+    const attr = document.createAttribute('hidden');
     panelId.setAttributeNode(attr);
   }
   /**

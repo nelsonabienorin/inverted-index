@@ -4,6 +4,7 @@
   "description": "An inverted index application",
   "main": "index.js",
   "dependencies": {
+    "eslint-config-airbnb-base": "^11.0.1",
     "jasmine": "^2.5.3",
     "jshint": "^2.9.4",
     "requirejs": "^2.3.2"

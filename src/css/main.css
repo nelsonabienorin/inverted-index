@@ -1,4 +1,7 @@
-    select{
+    select {
       width: 30% !important;
       color: white;
-      }
+    }
+    .padInstr {
+      margin-right:15px !important;
+    }

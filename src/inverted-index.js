@@ -13,6 +13,7 @@ class InvertedIndex {
     this.allIndexFile = {};
     this.searchResult = {};
     this.msg = '';
+    this.myTest = 'my test';
   }
   /**
    * Create index

@@ -40,7 +40,7 @@ gulp.task('browserSync', () => {
 
 // configure which files to watch and what tasks to use on file changes
 gulp.task('default', ['browserSync', 'watch', 'scripts', 'test', 'karma']);
-gulp.task('test', ['karma']);
+// gulp.task('test', ['karma']);
 gulp.task('watch', () => {
   // gulp.watch('./scss/*.scss', ['sass']);
   gulp.watch('src/css/*.css', browserSync.reload);
@@ -65,20 +65,20 @@ gulp.task('karma', (done) => {
   });
 });
 
-gulp.task('scripts', () => {
- gulp.src('src/inverted.js')
-   .pipe(browserify())
-   .pipe(rename('bundle.js'))
-   .pipe(gulp.dest('jasmine/classbuild'));
-});
+// gulp.task('scripts', () => {
+//  gulp.src('src/inverted.js')
+//    .pipe(browserify())
+//    .pipe(rename('bundle.js'))
+//    .pipe(gulp.dest('jasmine/classbuild'));
+// });
 
 
-gulp.task('scripts', () => {
- gulp.src('src/app.js')
-   .pipe(browserify())
-   .pipe(rename('bundle.js'))
-   .pipe(gulp.dest('jasmine/classbuild'));
-});
+// gulp.task('scripts', () => {
+//  gulp.src('src/app.js')
+//    .pipe(browserify())
+//    .pipe(rename('bundle.js'))
+//    .pipe(gulp.dest('jasmine/classbuild'));
+// });
 // gulp.task('jasmine', () => {
 //   const filesForTest = ['./jasmine/spec/less/**/*'];
 //     gulp.src(filesForTest)

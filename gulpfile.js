@@ -39,7 +39,7 @@ gulp.task('browserSync', () => {
 // });
 
 // configure which files to watch and what tasks to use on file changes
-gulp.task('default', ['browserSync', 'watch', 'scripts', 'test', 'karma']);
+gulp.task('default', ['browserSync', 'watch', 'scripts', 'karma']);
 // gulp.task('test', ['karma']);
 gulp.task('watch', () => {
   // gulp.watch('./scss/*.scss', ['sass']);

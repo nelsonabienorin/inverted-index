@@ -61,7 +61,6 @@ class InvertedIndexUI {
    */
   displayToView(result, functionCallName, filename) {
     let objWithHighIndex = 0;
-    console.log(result);
     $(`#${functionCallName}indextable`).empty();
     this.content = "<table class='striped'>";
     this.icon = "<i class='material-icons'>done</i>";
@@ -70,7 +69,6 @@ class InvertedIndexUI {
       // This part loops through to get the object with
       // the highest index
       if (this.fileHighestLength[filename]) {
-        console.log('this filehighest filename');
         objWithHighIndex = this.fileHighestLength[filename];
       } else {
         for (let term in result) {
@@ -120,7 +118,6 @@ class InvertedIndexUI {
     uploadInfoId.innerHTML = msg;
     uploadInfoId.className = classAttr;
   }
-
   /**
    * Function populateSelectBox to
    * populate select box if file uploaded
@@ -151,6 +148,43 @@ class InvertedIndexUI {
    * empty the table content
    */
   emptyTable(tableName) {
-    $(`#` + tableName + `indextable`).empty();
+    $(`#${tableName}indextable`).empty();
+  }
+  /**
+   * Function displayToView
+   * output result to html
+   * @param:{object} result
+   * @param:{string} functionCallName
+   */
+  displayToViewAllSearch(result, functionCallName) {
+    $(`#${functionCallName}indextable`).empty();
+    let jsonFileContent = {};
+    const found = this.icon;
+    const notFound = 'X';
+    this.content = "<table class='highlight'>";
+    for (let jsonFileNames in result) {
+      this.content += `<thead><tr><th>File Name: ${jsonFileNames}</th></tr></thead>`;
+      this.content += '<thead class=\'card\'><tr class=\'card\'><th class=\' card\'>Word</th>';
+      // this generates/builds the header
+      for (let i = 1; i <= this.fileHighestLength[jsonFileNames]; i += 1) {
+        this.content += `<th class=\'card\'>Doc ${i} </th>`;
+      }
+      this.content += '</tr></thead><tbody>';
+      jsonFileContent = result[jsonFileNames];
+      for (let term in jsonFileContent) {
+        this.content += `<tr><td>  ${term}  </td>`;
+        let curArr = jsonFileContent[term];
+        for (let j = 0; j < this.fileHighestLength[jsonFileNames]; j++) {
+          if (curArr[j] === true) {
+            this.content += `<td class = 'green-text'> ${found} </td>`;
+          } else {
+            this.content += `<td class = 'red-text'> ${notFound} </td>`;
+          }
+        }
+        this.content += '</tr>';
+      }
+    }
+    this.content += '</tbody></table>';
+    $(`#${functionCallName}indextable`).append(this.content);
   }
 }

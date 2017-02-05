@@ -117,7 +117,6 @@ class InvertedIndex {
       for (let key in this.allFiles) {
         let searchResultKey = {};
         let searchSingleJson = this.allFiles[key];
-
         uniqueQuery.forEach((eachQuery) => {
           if (eachQuery in searchSingleJson) {
             searchResultKey[eachQuery] = searchSingleJson[eachQuery];
@@ -126,8 +125,6 @@ class InvertedIndex {
           }
         });
         searchResult[key] = searchResultKey;
-      //  generates with the tokens the filename
-      // searchResult = searchResultKey;|
       }
       return searchResult;
     } else {

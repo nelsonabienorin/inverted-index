@@ -24,8 +24,13 @@ document.getElementById('selectfilename1').addEventListener('change', (e) => {
 });
 // An event listener to listen to when create index button is clicked
 document.getElementById('search_id').addEventListener('click', () => {
-  let searchQuery = document.getElementById('search').value;
-  utilObj.searchIndexTest(searchQuery);
+  const searchQuery = document.getElementById('search').value;
+  if (searchQuery === '') {
+    this.msg = 'Empty Input Detected!';
+    invertedUIObj.notificationBoard(this.msg, 'error');
+  } else {
+     utilObj.searchIndexTest(searchQuery);
+  }
 });
 // An event listener to listen to when search index button is clicked
 document.getElementById('create_id').addEventListener('click', () => {
@@ -34,6 +39,6 @@ document.getElementById('create_id').addEventListener('click', () => {
   utilObj.validateFile(uploadedFile, fileName);
 });
 // This initialises the modal plugin once the documents is ready
-$(document).ready(function () {
+$(document).ready(() => {
   $('.modal').modal();
 });

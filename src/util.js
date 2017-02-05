@@ -14,6 +14,7 @@ class Util {
     this.msg = '';
     this.fileHighestLength = {};
     this.searchResult = {};
+    this.file = {};
   }
   /**
    * Function validateFile to
@@ -24,6 +25,7 @@ class Util {
   validateFile(uploadedFile, fileName) {
     this.allFileUploads = invertedClassObj.allFiles;
     this.file = uploadedFile;
+    console.log('@here' + this.file.length);
     const selectedFile = invertedUIObj.getSelectedFileToCreate();
     for (const key in this.allFileUploads) {
       if (key === this.file.name) {
@@ -57,23 +59,24 @@ class Util {
   searchIndexTest(searchQuery) {
     const selectedFile = invertedUIObj.getSelectedFileToSearch();
     const functionCallName = 'search';
-    if (typeof this.allFileUploads === 'undefined' || this.allFileUploads[selectedFile] === 'undefined') {
-        this.msg = 'You have to firstly Create Index!';
-        invertedUIObj.notificationBoard(this.msg, 'error');
-      } else if (typeof this.file.name === 'undefined') {
+    if (typeof this.allFileUploads === 'undefined' || this.allFileUploads[selectedFile] === 'undefined' || !this.file.name || typeof this.file === 'undefined') {
+      this.msg = 'You have to firstly Create Index!';
+      invertedUIObj.notificationBoard(this.msg, 'error');
+    } else if (typeof this.file.name === 'undefined') {
       this.msg = 'Empty Input Detected!';
       invertedUIObj.notificationBoard(this.msg, 'error');
     } else {
       if (selectedFile === 'all') {
         this.searchResult = invertedClassObj.searchIndex(searchQuery, selectedFile);
-        invertedUIObj.displayToView(this.searchResult, functionCallName, selectedFile);
+        invertedUIObj.displayToViewAllSearch(this.searchResult, functionCallName);
       }
-      if (selectedFile !== null) {
+       if (selectedFile !== null && selectedFile !== 'all') {
         this.searchResult = invertedClassObj.searchIndex(searchQuery, selectedFile);
         invertedUIObj.displayToView(this.searchResult, functionCallName, selectedFile);
-      } else {
+      }
+      if (!selectedFile) {
         this.searchResult = invertedClassObj.searchIndex(searchQuery, this.file.name);
-        invertedUIObj.displayToView(this.searchResult, functionCallName, selectedFile);
+        invertedUIObj.displayToView(this.searchResult, functionCallName, this.file.name);
       }
     }
   }

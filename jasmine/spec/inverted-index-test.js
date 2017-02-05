@@ -1,37 +1,8 @@
 
-const correctBook = [
-  {
-    "title": "Alice in Wonderland",
-    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
-  },
+const correctBook = require('../books.json');
+const emptyBook = require('../emptyBook.json');
+const json2 = require('../adventures.json');
 
-  {
-    "title": "The Lord of the Rings: The Fellowship of the Ring.",
-    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
-  }
-];
-const emptyBook= [
-  {
-    " ": " ",
-    " ": " "
-  },
-
-  {
-    " ": "",
-    " ": " "
-  }
-];
-const json2 = [
-  {
-    "title": "Nelson in Auckland",
-    "text": "Debby picks up the coconut from the ,top of the chair"
-  },
-
-  {
-    "title": "A trip to Mallaise Island",
-    "text": "So many dangerous animals were found on the way like snakes; mamba type"
-  }
-];
 describe('Read book data', () => {
 const emptyArray = [];
 const invertedobj = new InvertedIndex();

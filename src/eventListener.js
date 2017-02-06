@@ -29,7 +29,7 @@ document.getElementById('search_id').addEventListener('click', () => {
     this.msg = 'Empty Input Detected!';
     invertedUIObj.notificationBoard(this.msg, 'error');
   } else {
-     utilObj.searchIndexTest(searchQuery);
+    utilObj.searchIndexTest(searchQuery);
   }
 });
 // An event listener to listen to when search index button is clicked

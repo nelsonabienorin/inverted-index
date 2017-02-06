@@ -20,11 +20,13 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'src/inverted-index.js',
-      'jasmine/spec/inverted-index-test.js',
+      // 'jasmine/spec/inverted-index-test.js',
       'jasmine/build/bundle.js'
     ],
 
-
+    coverallsReporter: {
+      repo_token: 'Ygg1lwAPDgyNBf2Q4fDlasipeJDhKfmlo'
+    },
     // list of files to exclude
     exclude: [
     ],
@@ -76,3 +78,5 @@ module.exports = function(config) {
     concurrency: Infinity
   })
 }
+
+

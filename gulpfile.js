@@ -4,8 +4,6 @@ const rename = require('gulp-rename');
 const karma = require('karma');
 const path = require('path');
 const browserSync = require('browser-sync').create();
-// const BufferStreams = require('bufferstreams');
-// const jasmineBrowser = require('gulp-jasmine-browser');
 
 gulp.task('browserSync', () => {
   browserSync.init({
@@ -16,33 +14,9 @@ gulp.task('browserSync', () => {
     ghostMode: false
   });
 });
-
-
-// const eslint = require('gulp-eslint');
-// create a default task and just log a message
-// gulp.task('default', function() {
-//   return gutil.log('Gulp is running!')
-// });
-
-// gulp.watch('src/javascript/*.js', ['eslint']);
-
-
-// gulp.task('lint', function () {
-//     return gulp.src(['**/*.js','!node_modules/**'])
-//         .pipe(eslint())
-//         .pipe(eslint.format())
-//         .pipe(eslint.failAfterError());
-// });
-
-// gulp.task('default', ['lint'], function () {
-//     // This will only run if the lint task is successful...
-// });
-
 // configure which files to watch and what tasks to use on file changes
 gulp.task('default', ['browserSync', 'watch', 'scripts', 'karma']);
-// gulp.task('test', ['karma']);
 gulp.task('watch', () => {
-  // gulp.watch('./scss/*.scss', ['sass']);
   gulp.watch('src/css/*.css', browserSync.reload);
   gulp.watch('*.html', browserSync.reload);
   gulp.watch('.karma.conf.js', browserSync.reload);
@@ -56,33 +30,25 @@ gulp.task('scripts', () => {
    .pipe(gulp.dest('jasmine/build'));
 });
 
-gulp.task('karma', (done) => {
-  karma.start({
+gulp.task('test', (done) => {
+  const karmaServer = new karma.Server({
     configFile: path.resolve('karma.conf.js'),
-    singleRun: true
-  }, () => {
+    browsers: ['Chrome']
+  }, (exitCode) => {
     done();
-  });
+    process.exit(exitCode);
+  }).start();
 });
 
-// gulp.task('scripts', () => {
-//  gulp.src('src/inverted.js')
-//    .pipe(browserify())
-//    .pipe(rename('bundle.js'))
-//    .pipe(gulp.dest('jasmine/classbuild'));
-// });
+gulp.task('test', () => {
+  browserSync.init({
+    server: {
+      baseDir: ['./jasmine', './src'],
+      port: 3120,
+      index: 'SpecRunner.html'
+    },
+    ghostMode: false
+  });
+  gulp.watch(['./jasmine/spec/inverted-index-test.js'], browserSync.reload);
+});
 
-
-// gulp.task('scripts', () => {
-//  gulp.src('src/app.js')
-//    .pipe(browserify())
-//    .pipe(rename('bundle.js'))
-//    .pipe(gulp.dest('jasmine/classbuild'));
-// });
-// gulp.task('jasmine', () => {
-//   const filesForTest = ['./jasmine/spec/less/**/*'];
-//     gulp.src(filesForTest)
-//     .pipe(watch(filesForTest))
-//     .pipe(jasmineBrowser.specRunner({ console: true }))
-//     .pipe(jasmineBrowser.headless());
-// });

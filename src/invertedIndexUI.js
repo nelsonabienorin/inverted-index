@@ -1,5 +1,11 @@
+/**
+ * InvertedIndexUI class - A class for managing rendering contents to the user
+ * @class
+ */
 class InvertedIndexUI {
-
+  /**
+   * constructor Creates Object variables to hold
+   */
   constructor() {
     this.content = '';
     this.icon = '';
@@ -7,14 +13,27 @@ class InvertedIndexUI {
     this.indexedFile = {};
     this.fileHighestLength = {};
   }
+  /**
+   * getSelectedFileToCreate()
+   * @param
+   * @return {object} value of selected option
+   */
   getSelectedFileToCreate() {
     return $('#selectfilename1').val();
   }
-
+  /**
+   * getSelectedFileToSearch
+   * @param
+   * @return {object} value of selected option
+   */
   getSelectedFileToSearch() {
     return $('#selectfilename2').val();
   }
-
+  /**
+   * fileReader
+   * @param {object} file
+   * @return {boolean}
+   */
   fileReader(file) {
     const fileReader = new FileReader();
     this.allFileUploads = invertedClassObj.allFiles;
@@ -55,9 +74,9 @@ class InvertedIndexUI {
   }
   /**
    * Function displayToView
-   * output result to html
    * @param:{object} result
    * @param:{string} functionCallName
+   * @param:{string} filename
    */
   displayToView(result, functionCallName, filename) {
     let objWithHighIndex = 0;
@@ -122,6 +141,7 @@ class InvertedIndexUI {
    * Function populateSelectBox to
    * populate select box if file uploaded
    * is valid
+   * @param:{string} filename
    */
   populateSelectBox(filename) {
     const selectFilename1 = document.getElementById('selectfilename1');
@@ -137,6 +157,8 @@ class InvertedIndexUI {
   /**
    * Function hideNotificationBoard to
    * hide notification
+   * @param
+   * @return
    */
   hideNotificationBoard() {
     const panelId = document.getElementById('uploadinfo_panel');
@@ -146,12 +168,14 @@ class InvertedIndexUI {
   /**
    * Function emptyTable to
    * empty the table content
+   * @param {string} tableName
+   * @return
    */
   emptyTable(tableName) {
     $(`#${tableName}indextable`).empty();
   }
   /**
-   * Function displayToView
+   * Function displayToViewAllSearch
    * output result to html
    * @param:{object} result
    * @param:{string} functionCallName

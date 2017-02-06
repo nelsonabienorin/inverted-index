@@ -20,6 +20,8 @@ class Util {
    * Function validateFile to
    * validate if file input
    * is a json file
+   * @param: {object} uploadedFile
+   * @param: {string} fileName
    * @returns {Boolean}
    */
   validateFile(uploadedFile, fileName) {
@@ -55,6 +57,8 @@ class Util {
    * Function searchIndexTest to
    * validate if query input
    * is valid
+   * @param: {string} searchQuery
+   * @returns null
    */
   searchIndexTest(searchQuery) {
     const selectedFile = invertedUIObj.getSelectedFileToSearch();
@@ -70,7 +74,7 @@ class Util {
         this.searchResult = invertedClassObj.searchIndex(searchQuery, selectedFile);
         invertedUIObj.displayToViewAllSearch(this.searchResult, functionCallName);
       }
-       if (selectedFile !== null && selectedFile !== 'all') {
+      if (selectedFile !== null && selectedFile !== 'all') {
         this.searchResult = invertedClassObj.searchIndex(searchQuery, selectedFile);
         invertedUIObj.displayToView(this.searchResult, functionCallName, selectedFile);
       }

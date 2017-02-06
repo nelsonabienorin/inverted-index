@@ -25,6 +25,7 @@ class InvertedIndex {
    * populateIndex
    * @param {string} fileName
    * @param {Object} fileContent
+   * @return null
    */
   populateIndex(fileName, fileContent) {
     let uniqueWords = [];
@@ -45,8 +46,9 @@ class InvertedIndex {
   }
   /**
    * createIndex
-   * @param {string} fileName
-   * @param {Object} fileContent
+   * @param {string}  fileName
+   * @param {object}  fileContent
+   * @return {object} this.allFiles[fileName]
    */
   createIndex(fileName, fileContents) {
     const validateJson = this.validate(fileContents);
@@ -79,7 +81,7 @@ class InvertedIndex {
    * removeDuplicateWords
    * @param   {Object} objTitle
    * @param   {Object} objText
-   * @returns {Object}
+   * @returns {Object} An array of unique words
    */
   removeDuplicateWords(objTitle, objText) {
     return [...new Set([...objTitle, ...objText])];
@@ -88,6 +90,7 @@ class InvertedIndex {
    * arrangeIndex
    * @param {Object} singlePage
    * @param {number} position
+   * @return null
    */
   arrangeIndex(singlePage, position) {
     singlePage.forEach((word) => {
@@ -121,7 +124,9 @@ class InvertedIndex {
           if (eachQuery in searchSingleJson) {
             searchResultKey[eachQuery] = searchSingleJson[eachQuery];
           } else {
-            searchResultKey[eachQuery] = { 0: false };
+            searchResultKey[eachQuery] = {
+              0: false
+            };
           }
         });
         searchResult[key] = searchResultKey;

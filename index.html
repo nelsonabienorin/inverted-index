@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='InvertedIndex'>
 
 <head>
   <!--Import Google Icon Font-->
@@ -8,54 +8,113 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="src/css/main.css">
 </head>
 
 <body>
   <!-- Navbar goes here -->
   <nav>
-    <div class="nav-wrapper green">
-      <a href="#" class="brand-logo left">Inverted Index</a>
-      <ul id="nav-mobile" class="left hide-on-med-and-down right">
-        <li><a href="collapsible.html">Guide</a></li>
-      </ul>
+    <div class="nav-wrapper cyan darken-4">
+      <a href="#" class="brand-logo left"> &nbsp; Inverted Index</a>
+      <a href="#modal1" class="right padInstr">Instructions</a>
+      <i class="material-icons right">info_outline</i>
     </div>
   </nav>
   <br/> <br/> <br/>
+  <div class="container">
+    <div id="uploadinfo_panel" class="card-panel" hidden>
+      <h5> <i class="material-icons">info</i>
+        <span id="uploadinfo_id" style="text-align: center;
+    display: block" class="blue-text text-darken-2"></span>
+      </h5>
+    </div>
+  </div>
   <div class="row">
     <!-- Left Layout -->
-    <div class="col s6">
+    <div class="col s6" ng-controller='validateController'>
       <form action="#">
         <div class="file-field input-field">
-          <div class="btn green">
+          <div class="btn cyan darken-4">
+            <i class="material-icons">insert_drive_file</i>
             <span>File</span>
-            <input type="file" multiple>
+            <input type="file" id="files_id" accept=".json">
           </div>
           <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Upload one or more files">
+            <input class="file-path validate" type="text" id="filename_id" placeholder="Upload files here"
+              value="">
           </div>
         </div>
       </form>
+      <select class="browser-default cyan darken-4 booklist" id="selectfilename1" name="booklist">
+        <option value="" disabled selected>Select file</option>
+      </select>
       <br/>
-      <a class=" btn green"><i class='material-icons green'>library_add</i>UPLOAD</a>
-      <a class=" btn green"><i class='material-icons'>library_books</i>SEARCH INDEX</a>
+      <a class=" btn cyan darken-4" id="create_id"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>
+      <br/> <br/> <br/>
+      <div id="createindextable"></div>
     </div>
     <div class="col s6">
       <!-- right side panel -->
       <div class="nav-wrapper">
         <form>
           <div class="input-field">
-            <input id="search" type="search" required>
-            <label for="search"><i class="material-icons">search</i></label>
-            <i class="material-icons">close</i>
+            <input id="search" type="search" value="" placeholder="search files here" required>
+            <select class="browser-default cyan darken-4 booklist" id="selectfilename2">
+              <option value="" disabled selected>Select File</option>
+              <option  class="all" value="all" hidden>all</option>
+            </select>
+            <label for="search"></label>
           </div> <br/>
-          <a class=" btn green"><i class="material-icons">search</i>SEARCH FILES</a>
+          <a class="btn cyan darken-4" id="search_id"><i class="material-icons" >search</i>SEARCH FILES</a>
         </form>
       </div>
+      <br/>
+      <br/>
+      <div id="searchindextable"></div>
     </div>
   </div>
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal cyan darken-4">
+    <div class="modal-content white-text">
+      <h5><i class="material-icons right">info_outline</i>How To Use This App</h5>
+      <ol>
+        <li> Choose a JSON File from your directory</li>
+        <li>Use the "Create Index" Button to have the index created and displayed </li>
+        <li>Use the "Search Files" Button to check the location of a word in the index
+        </li>
+        <li> You can also select an existing file from the select box to either "Create
+          Index"" or "Search Index".
+        </li>
+      </ol>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect cyan darken-4 btn-flat white-text">OK</a>
+    </div>
+  </div>
+  <!-- End of Modal -->
+  <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/>
+  <!-- Beginning  of footer -->
+  <footer class="page-footer cyan darken-4">
+    <div class="footer-copyright">
+      <div class="container white-text">
+        © 2017 Inverted Index Application
+        <a class="grey-text text-lighten-4 right" href="https://github.com/andela-nrotimi/inverted-index">My GitHub</a>
+      </div>
+    </div>
+  </footer>
+  <!-- End of footer -->
+  <!--Import angular js-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+  <script src="controllers/app.js"></script>
   <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
+  <script type="text/javascript" src="src/util.js"></script>
+  <script type="text/javascript" src="src/invertedIndexUI.js"></script>
+  <script type="text/javascript" src="src/inverted-index.js"></script>
+  <script type="text/javascript" src="src/eventListener.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,17 @@
+    select {
+      width: 30% !important;
+      color: white;
+    }
+
+    .padInstr {
+      margin-right: 15px !important;
+    }
+
+    #uploadinfo_panel {
+      border-radius: 15px !important;
+      border-color: grey !important;
+    }
+    .card {
+      background-color:#006064 !important;
+      color: white !important;
+    }

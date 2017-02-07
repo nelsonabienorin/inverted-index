@@ -10,12 +10,13 @@ gulp.task('browserSync', () => {
     server: {
       baseDir: './',
     },
-    port: 3000,
+    open: false,
+    port: process.env.PORT || 5000,
     ghostMode: false
   });
 });
 // configure which files to watch and what tasks to use on file changes
-gulp.task('default', ['browserSync', 'watch', 'scripts', 'karma']);
+gulp.task('default', ['browserSync', 'watch', 'scripts']);
 gulp.task('watch', () => {
   gulp.watch('src/css/*.css', browserSync.reload);
   gulp.watch('*.html', browserSync.reload);
@@ -30,7 +31,7 @@ gulp.task('scripts', () => {
    .pipe(gulp.dest('jasmine/build'));
 });
 
-gulp.task('test', (done) => {
+gulp.task('testkarma', (done) => {
   const karmaServer = new karma.Server({
     configFile: path.resolve('karma.conf.js'),
     browsers: ['Chrome']

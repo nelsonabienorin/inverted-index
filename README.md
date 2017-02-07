@@ -47,7 +47,7 @@ The Application is available:
     npm start
     ```
 
-  - Access the application via http://localhost:4000/
+  - Access the application via https://nrotimi-inverted-index.herokuapp.com/
 
 
 #### The application was built using the following Technologies and Services:

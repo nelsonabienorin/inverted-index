@@ -74,7 +74,8 @@ class Util {
         invertedUIObj.displayToViewAllSearch(this.searchResult, functionCallName);
       }
       if (selectedFile !== null && selectedFile !== 'all') {
-        this.searchResult = invertedClassObj.searchIndex(searchQuery, selectedFile);
+        this.searchResult = invertedClassObj.searchIndex(searchQuery,
+          selectedFile);
         invertedUIObj.displayToView(this.searchResult, functionCallName, selectedFile);
       }
       if (!selectedFile) {

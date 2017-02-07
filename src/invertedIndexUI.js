@@ -14,17 +14,15 @@ class InvertedIndexUI {
     this.fileHighestLength = {};
   }
   /**
-   * getSelectedFileToCreate()
-   * @param
-   * @return {object} value of selected option
+   * getSelectedFileToCreate
+   * @returns {object} value of selected option.
    */
   getSelectedFileToCreate() {
     return $('#selectfilename1').val();
   }
   /**
    * getSelectedFileToSearch
-   * @param
-   * @return {object} value of selected option
+   * @returns {object} value of selected option.
    */
   getSelectedFileToSearch() {
     return $('#selectfilename2').val();
@@ -73,8 +71,8 @@ class InvertedIndexUI {
     fileReader.readAsText(file);
   }
   /**
-   * Function displayToView
-   * @param:{object} result
+   * displayToView
+   * @param {object} result
    * @param:{string} functionCallName
    * @param:{string} filename
    */
@@ -120,11 +118,11 @@ class InvertedIndexUI {
     }
   }
   /**
-   * Function displayToView
-   * output result to html
-   * @param:{string} msg
+   * notificationBoard output result to html
+   * @param {string} msg
    * @param:{string} msgType
    */
+
   notificationBoard(msg, msgType) {
     let classAttr = '';
     if (msgType === 'success') {
@@ -138,9 +136,7 @@ class InvertedIndexUI {
     uploadInfoId.className = classAttr;
   }
   /**
-   * Function populateSelectBox to
-   * populate select box if file uploaded
-   * is valid
+   * populateSelectBox populate select box if file uploaded
    * @param:{string} filename
    */
   populateSelectBox(filename) {
@@ -155,10 +151,7 @@ class InvertedIndexUI {
     $('.all').show();
   }
   /**
-   * Function hideNotificationBoard to
-   * hide notification
-   * @param
-   * @return
+   * hideNotificationBoard hides notification
    */
   hideNotificationBoard() {
     const panelId = document.getElementById('uploadinfo_panel');
@@ -166,20 +159,18 @@ class InvertedIndexUI {
     panelId.setAttributeNode(attr);
   }
   /**
-   * Function emptyTable to
-   * empty the table content
+   * emptyTable empty the table content
    * @param {string} tableName
-   * @return
    */
   emptyTable(tableName) {
     $(`#${tableName}indextable`).empty();
   }
   /**
-   * Function displayToViewAllSearch
-   * output result to html
+   * displayToViewAllSearch
    * @param:{object} result
    * @param:{string} functionCallName
    */
+
   displayToViewAllSearch(result, functionCallName) {
     $(`#${functionCallName}indextable`).empty();
     let jsonFileContent = {};

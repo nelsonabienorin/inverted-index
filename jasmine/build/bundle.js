@@ -26,11 +26,11 @@ module.exports=[
 
 },{}],3:[function(require,module,exports){
 const correctBook = require('../books.json');
+
 const emptyBook = require('../emptyBook.json');
 
 const invertedobj = new InvertedIndex();
 const bookIndex = invertedobj.createIndex('correctBook.json', correctBook);
-
 
 describe('Read book data', () => {
   describe('Read book data', () => {
@@ -46,8 +46,10 @@ describe('Read book data', () => {
   });
 
   describe('Populate Index', () => {
-    it('should read the book and make sure it is an instance of an object', () => {
-      expect(typeof invertedobj.createIndex('correctBook.json', correctBook)).toEqual('object');
+    it(`should read the book and make sure
+     it is an instance of an object`, () => {
+      expect(typeof invertedobj
+      .createIndex('correctBook.json', correctBook)).toEqual('object');
     });
 
     it('Should ensure index is correct', () => {
@@ -58,7 +60,8 @@ describe('Read book data', () => {
   });
 
   describe('Search Index', () => {
-    it('Should return an array of the indices of the correct objects that contain the words in the search query', () => {
+    it(`Should return an array of the indices of
+     the correct objects that contain the words in the search query`, () => {
       expect(invertedobj.searchIndex('alice', 'correctBook.json')).toEqual({
         alice: {
           0: true

@@ -17,7 +17,9 @@ document.getElementById('selectfilename1').addEventListener('change', (e) => {
   const selectedFile = $('#selectfilename1').val();
   const functionCallName = 'create';
   if (invertedClassObj.allFiles[selectedFile]) {
-    invertedUIObj.displayToView(invertedClassObj.allFiles[selectedFile], functionCallName, selectedFile);
+    invertedUIObj.displayToView (
+      invertedClassObj.allFiles[selectedFile],
+      functionCallName, selectedFile);
     const msg = 'Index  Successfully Created !';
     invertedUIObj.notificationBoard(msg, 'success');
   }

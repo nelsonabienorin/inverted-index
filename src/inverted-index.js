@@ -3,7 +3,11 @@
  * @class
  */
 class InvertedIndex {
-
+  /**
+   * class constructor
+   * @constructor
+   * For Data Initialization
+   */
   constructor() {
     this.allFiles = {};
     this.indexedFIles = {};
@@ -72,7 +76,7 @@ class InvertedIndex {
   /**
    * getIndex
    * @param   {Object} obj
-   * @returns {Object} obj
+   * @returns {Object}
    */
   removeSpecialXters(obj) {
     return obj.toLowerCase().match(/\w+/g);
@@ -109,7 +113,7 @@ class InvertedIndex {
    * searchIndex
    * @param   {String} input
    * @param   {String} fileName
-   * @returns {Object} searchResult
+   * @returns {Object}  searchResult returns searchResult
    */
   searchIndex(input, fileName) {
     let searchResult = {};
@@ -122,7 +126,8 @@ class InvertedIndex {
         let searchSingleJson = this.allFiles[key];
         uniqueQuery.forEach((eachQuery) => {
           if (eachQuery in searchSingleJson) {
-            searchResultKey[eachQuery] = searchSingleJson[eachQuery];
+            searchResultKey[eachQuery] =
+              searchSingleJson[eachQuery];
           } else {
             searchResultKey[eachQuery] = {
               0: false
@@ -134,7 +139,8 @@ class InvertedIndex {
       return searchResult;
     } else {
       uniqueQuery.forEach((word) => {
-        if (typeof this.allFiles[fileName] !== 'undefined' && this.allFiles[fileName][word]) {
+        if (typeof this.allFiles[fileName] !== 'undefined' && this
+          .allFiles[fileName][word]) {
           searchResult[word] = this.allFiles[fileName][word];
         } else {
           searchResult[word] = {

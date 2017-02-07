@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Fri Jan 20 2017 15:08:39 GMT+0100 (WAT)
 
-module.exports = function(config) {
+module.exports = (config) => {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -24,19 +24,18 @@ module.exports = function(config) {
       'jasmine/build/bundle.js'
     ],
 
-    coverallsReporter: {
-      repo_token: 'Ygg1lwAPDgyNBf2Q4fDlasipeJDhKfmlo'
-    },
     // list of files to exclude
-    exclude: [
-    ],
-
+    exclude: [],
 
     // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: { 'src/inverted-index.js': ['coverage']
+    // available preprocessors:
+    //https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+      'src/inverted-index.js': ['coverage'],
+      'src/eventListener.js': ['coverage'],
+      'src/invertedIndexUI.js': ['coverage'],
+      'src/util.js': ['coverage']
     },
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -59,24 +58,30 @@ module.exports = function(config) {
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
+    // enable  disable watching file and executing tests
+    // whenever any file changes
 
-    // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'Firefox'],
+    customLaunchers: {
+     Chrome_travis_ci: {
+       base: 'Chrome',
+       flags: ['--no-sandbox']
+     }
+   },
 
+   // start these browsers depending on our enviroment
+   browsers: process.env.TRAVIS ? ['Chrome_travis_ci'] : ['Chrome'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
-}
-
-
+  });
+};

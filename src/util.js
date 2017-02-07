@@ -7,7 +7,7 @@ class Util {
    * class constructor
    * @constructor
    * For Data Initialization
-   **/
+   */
   constructor() {
     this.rawFile = {};
     this.allFileUploads = {};
@@ -17,12 +17,10 @@ class Util {
     this.file = {};
   }
   /**
-   * Function validateFile to
-   * validate if file input
-   * is a json file
-   * @param: {object} uploadedFile
+   * Validate json file
+   * @param {object} uploadedFile
    * @param: {string} fileName
-   * @returns {Boolean}
+   * @returns {Boolean} returns a boolean
    */
   validateFile(uploadedFile, fileName) {
     this.allFileUploads = invertedClassObj.allFiles;
@@ -54,10 +52,8 @@ class Util {
   }
   /**
    * Function searchIndexTest to
-   * validate if query input
-   * is valid
-   * @param: {string} searchQuery
-   * @returns null
+   * @param {string} searchQuery
+   * @returns {null}
    */
   searchIndexTest(searchQuery) {
     const selectedFile = invertedUIObj.getSelectedFileToSearch();

@@ -27,19 +27,18 @@ class Util {
   validateFile(uploadedFile, fileName) {
     this.allFileUploads = invertedClassObj.allFiles;
     this.file = uploadedFile;
-    console.log('@here' + this.file.length);
     const selectedFile = invertedUIObj.getSelectedFileToCreate();
+    if (!this.file || typeof this.file === 'undefined') {
+      this.msg = 'No file selected !';
+      invertedUIObj.notificationBoard(this.msg, 'error');
+      return false;
+    }
     for (const key in this.allFileUploads) {
       if (key === this.file.name) {
         this.msg = 'File already Exist!';
         invertedUIObj.notificationBoard(this.msg, 'error');
         return false;
       }
-    }
-    if (!this.file) {
-      this.msg = 'No file selected';
-      invertedUIObj.notificationBoard(this.msg, 'error');
-      return false;
     }
     if (this.file.type !== 'application/json') {
       this.msg = 'File MUST be JSON!';

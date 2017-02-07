@@ -10,7 +10,6 @@ gulp.task('browserSync', () => {
     server: {
       baseDir: './',
     },
-    open: false,
     port: process.env.PORT || 5000,
     ghostMode: false
   });
@@ -48,6 +47,7 @@ gulp.task('test', () => {
       port: 3120,
       index: 'SpecRunner.html'
     },
+    open: false,
     ghostMode: false
   });
   gulp.watch(['./jasmine/spec/inverted-index-test.js'], browserSync.reload);

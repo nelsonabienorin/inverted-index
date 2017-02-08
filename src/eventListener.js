@@ -10,7 +10,7 @@ document.getElementById('files_id').addEventListener('change', (e) => {
   invertedUIObj.hideNotificationBoard();
 });
 
-// An event listener to listen to change in select box
+// An event listener to listen to change in select box by user
 document.getElementById('selectfilename1').addEventListener('change', (e) => {
   invertedUIObj.emptyTable('create');
   invertedUIObj.emptyTable('search');

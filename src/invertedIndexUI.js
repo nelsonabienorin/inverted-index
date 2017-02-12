@@ -179,7 +179,7 @@ class InvertedIndexUI {
     this.content = "<table class='highlight'>";
     for (let jsonFileNames in result) {
       this.content += `<thead><tr><th>File Name: ${jsonFileNames}</th></tr></thead>`;
-      this.content += '<thead class=\'card\'><tr class=\'card\'><th class=\' card\'>Word</th>';
+      this.content += '<thead><tr><th class=\' card\'>Word</th>';
       // this generates/builds the header
       for (let i = 1; i <= this.fileHighestLength[jsonFileNames]; i += 1) {
         this.content += `<th class=\'card\'>Doc ${i} </th>`;

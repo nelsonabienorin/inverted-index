@@ -46,11 +46,14 @@
           </div>
         </div>
       </form>
+      <a class=" btn cyan darken-4" id="create_id"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>
+       <br/> <br/> <br/>
+      <div class="chip card-panel cyan darken-4 tooltipped white-text" data-position="top" data-delay="50" data-tooltip="Select the file you want to view its index below">
+        View Switcher for Created Index
+      </div>
       <select class="browser-default cyan darken-4 booklist" id="selectfilename1" name="booklist">
         <option value="" disabled selected>Select file</option>
       </select>
-      <br/>
-      <a class=" btn cyan darken-4" id="create_id"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>
       <br/> <br/> <br/>
       <div id="createindextable"></div>
     </div>
@@ -60,7 +63,7 @@
         <form>
           <div class="input-field">
             <input id="search" type="search" value="" placeholder="search files here" required>
-            <select class="browser-default cyan darken-4 booklist" id="selectfilename2">
+            <select class="browser-default cyan darken-4 booklist" id="selectfilename2" disabled>
               <option value="" disabled selected>Select File</option>
               <option  class="all" value="all" hidden>all</option>
             </select>

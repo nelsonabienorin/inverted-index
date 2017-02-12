@@ -40,6 +40,10 @@ document.getElementById('create_id').addEventListener('click', () => {
   const uploadedFile = document.getElementById('files_id').files[0];
   utilObj.validateFile(uploadedFile, fileName);
 });
+// An event listener to listen to when the user starts typing
+$('#search').keyup(() => {
+   $('#selectfilename2').removeAttr('disabled');
+});
 // This initialises the modal plugin once the documents is ready
 $(document).ready(() => {
   $('.modal').modal();

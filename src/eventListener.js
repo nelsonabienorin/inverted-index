@@ -42,7 +42,7 @@ document.getElementById('create_id').addEventListener('click', () => {
 });
 // An event listener to listen to when the user starts typing
 $('#search').keyup(() => {
-   $('#selectfilename2').removeAttr('disabled');
+   $('#selectfilename2').css('display','block');
 });
 // This initialises the modal plugin once the documents is ready
 $(document).ready(() => {

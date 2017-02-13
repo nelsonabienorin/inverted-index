@@ -4,13 +4,14 @@ eslint:
   channel: "eslint-2"
   config:
   extensions:
-  - .es6
   - .js
   - .jsx
 duplication:
   enabled: true
   checks:
     Similar code:
+      enabled: false
+    Identical code:
       enabled: false
   config:
     languages:

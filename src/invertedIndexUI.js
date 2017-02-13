@@ -22,7 +22,7 @@ class InvertedIndexUI {
   }
   /**
    * getSelectedFileToSearch
-   * @returns {object} value of selected option.
+   * @returns {String} value of selected option.
    */
   getSelectedFileToSearch() {
     return $('#selectfilename2').val();

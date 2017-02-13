@@ -1,5 +1,5 @@
 /**
- * InvertedIndexClass class
+ * Inverted Index Class
  * @class
  */
 class InvertedIndex {

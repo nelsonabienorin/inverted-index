@@ -17,7 +17,7 @@ document.getElementById('selectfilename1').addEventListener('change', (e) => {
   const selectedFile = $('#selectfilename1').val();
   const functionCallName = 'create';
   if (invertedClassObj.allFiles[selectedFile]) {
-    invertedUIObj.displayToView (
+    invertedUIObj.displayToView(
       invertedClassObj.allFiles[selectedFile],
       functionCallName, selectedFile);
     const msg = 'Index  Successfully Created !';
@@ -42,7 +42,7 @@ document.getElementById('create_id').addEventListener('click', () => {
 });
 // An event listener to listen to when the user starts typing
 $('#search').keyup(() => {
-   $('#selectfilename2').css('display','block');
+  $('#selectfilename2').css('display', 'block');
 });
 // This initialises the modal plugin once the documents is ready
 $(document).ready(() => {

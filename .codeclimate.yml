@@ -1,23 +1,19 @@
 engines:
-eslint:
-  enabled: true
-  channel: "eslint-2"
-  config:
-  extensions:
-  - .js
-  - .jsx
-duplication:
-  enabled: true
-  checks:
-    Similar code:
-      enabled: false
-    Identical code:
-      enabled: false
-  config:
-    languages:
-    - javascript
+  eslint:
+    enabled: true
+    channel: "eslint-2"
+  duplication:
+    enabled: true
+    checks:
+      Similar code:
+        enabled: false
+      Identical code:
+        enabled: false
+    config:
+      languages:
+      - javascript
 ratings:
-paths:
-- src/*.js
+  paths:
+  - src/*.js
 exclude_paths:
 - 'jasmine/*'

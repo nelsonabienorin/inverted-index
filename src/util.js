@@ -5,8 +5,8 @@
 class Util {
   /**
    * class constructor
+   * Data Initialization
    * @constructor
-   * For Data Initialization
    */
   constructor() {
     this.rawFile = {};

@@ -5,8 +5,8 @@
 class InvertedIndex {
   /**
    * class constructor
-   * @constructor
    * For Data Initialization
+   * @constructor
    */
   constructor() {
     this.allFiles = {};

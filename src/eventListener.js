@@ -5,7 +5,7 @@ const invertedUIObj = new InvertedIndexUI();
 // An instance of the App class
 const utilObj = new Util();
 // An event listener to listen to change in uploaded file
-$("#files_id").change(function () {
+$('#files_id').change(() => {
   invertedUIObj.emptyTable('create');
   invertedUIObj.hideNotificationBoard();
   const fileName = $('#filename_id').val();
@@ -14,16 +14,22 @@ $("#files_id").change(function () {
   utilObj.validateFile(uploadedFile, fileName, userEvent);
 });
 // An event listener to listen to change in select box by user
-$("#selectfilename1").change(function () {
+$('#selectfilename1').change(() => {
   invertedUIObj.emptyTable('create');
   invertedUIObj.emptyTable('search');
   const selectedFile = $('#selectfilename1').val();
-  const userEvent = 'select';
-  invertedUIObj.callCreateIndex(userEvent, selectedFile);
+  const functionCallName = 'create';
+  if (invertedClassObj.allFiles[selectedFile]) {
+    invertedUIObj.displayToView(
+      invertedClassObj.allFiles[selectedFile],
+      functionCallName, selectedFile);
+    const msg = `created index view switched to ${selectedFile}`;
+    invertedUIObj.notificationBoard(msg, 'success');
+  }
   $('#selectfilename1').prop('selectedIndex', 0);
 });
 // An event listener to listen to when search index button is clicked
-$("#search_id").click(function () {
+$('#search_id').click(() => {
   const searchQuery = document.getElementById('search').value;
   if (searchQuery === '') {
     this.msg = 'Empty Input Detected!';
@@ -32,8 +38,8 @@ $("#search_id").click(function () {
     utilObj.searchIndexTest(searchQuery);
   }
 });
-// An event listener to listen to when create index button is clicked
-$("#create_id").click(function () {
+// An event listener to listen to create index button when clicked
+$('#create_id').click(() => {
   invertedUIObj.emptyTable('create');
   invertedUIObj.emptyTable('search');
   const functionCallName = 'create';

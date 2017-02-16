@@ -24,15 +24,16 @@ class InvertedIndexUI {
   }
   /**
    * getSelectedFileToSearch
-   * @returns {String} value of selected option.
+   * @return {String} value of selected option.
    */
   getSelectedFileToSearch() {
     return $('#selectfilename2').val();
   }
   /**
    * fileReader
-   * @param {object} file
-   * @return {boolean}
+   * @param {Object} file
+   * @param {String} userEvent
+   * @return {Boolean}
    */
   fileReader(file, userEvent) {
     const fileReader = new FileReader();
@@ -48,26 +49,33 @@ class InvertedIndexUI {
       if (this.jsonContent.length === 0) {
         this.msg = 'File cannot be EMPTY!';
         invertedUIObj.notificationBoard(this.msg, 'error');
-      } else {
-        if (!this.allFileUploads[file.name]) {
-          this.msg = 'File uploaded successfully !';
-          invertedUIObj.notificationBoard(this.msg, 'success');
-          this.allFileUploads[file.name] = this.jsonContent;
-          this.uploadedFileName = file.name;
-          const selectedFile = this.getSelectedFileToCreate();
-          this.callCreateIndex(userEvent, file.name);
-        }
+      }
+      if (!this.allFileUploads[file.name]) {
+        this.msg = `File ${file.name} uploaded successfully !`;
+        invertedUIObj.notificationBoard(this.msg, 'success');
+        this.allFileUploads[file.name] = this.jsonContent;
+        this.uploadedFileName = file.name;
+        const selectedFile = this.getSelectedFileToCreate();
+        this.callCreateIndex(userEvent, file.name);
       }
     };
     fileReader.readAsText(file);
   }
+  /**
+   * callCreateIndex
+   * Makes call to the function createIndex
+   * @param {string} userEvent
+   * @param {string} fileName
+   * @return {Void}
+   */
   callCreateIndex(userEvent, fileName) {
     if (userEvent !== 'change') {
       if (typeof this.allFileUploads[fileName] === 'object') {
         this.indexedFile = invertedClassObj.createIndex(fileName, this.jsonContent);
         const functionCallName = 'create';
         this.displayToView(this.indexedFile, functionCallName, fileName);
-        if (!$('#selectfilename1 option[value="' + this.uploadedFileName + '"]').prop("selected", true).length) {
+        if (!$(`#selectfilename1 option[value =
+        '${this.uploadedFileName}']`).prop('selected', true).length) {
           invertedUIObj.populateSelectBox(this.uploadedFileName);
         }
       }
@@ -75,9 +83,10 @@ class InvertedIndexUI {
   }
   /**
    * displayToView
-   * @param {object} result
-   * @param:{string} functionCallName
-   * @param:{string} filename
+   * @param {Object} result
+   * @param:{String} functionCallName
+   * @param:{String} filename
+   * @return:{Void}
    */
   displayToView(result, functionCallName, filename) {
     let objWithHighIndex = 0;
@@ -208,11 +217,14 @@ class InvertedIndexUI {
     $(`#${functionCallName}indextable`).append(this.content);
   }
   /**
-   * clearInputFileName clears the filename in textbox
+   * clearInputFileName
+   * clears the filename in textbox
+   * @param {Void}
+   * @return {Void}
    */
   clearInputFileName() {
-    const fileId = $('#files_id')
-    const fileNameId = $('#filename_id')
+    const fileId = $('#files_id');
+    const fileNameId = $('#filename_id');
     fileId.replaceWith(fileId.val('').clone(true));
     fileNameId.replaceWith(fileNameId.val('').clone(true));
   }

@@ -1,3 +1,37 @@
+# engines:
+#   eslint:
+#     enabled: true
+#     channel: "eslint-2"
+#   duplication:
+#     enabled: true
+#     checks:
+#       Similar code:
+#         enabled: false
+#       Identical code:
+#         enabled: false
+#     config:
+#       languages:
+#       - javascript
+# ratings:
+#   paths:
+#   - src/*.js
+# exclude_paths:
+# - 'jasmine/*'
+
+# engines:
+#   eslint:
+#     enabled: true
+#   duplication:
+#     enabled: false
+#     config:
+#       languages:
+#       - javascript
+# ratings:
+#   paths:
+#   - "**.js"
+# exclude_paths:
+# - 'jasmine/*'
+
 engines:
   eslint:
     enabled: true
@@ -7,8 +41,6 @@ engines:
     checks:
       Similar code:
         enabled: false
-      Identical code:
-        enabled: false
     config:
       languages:
       - javascript
@@ -16,4 +48,7 @@ ratings:
   paths:
   - src/*.js
 exclude_paths:
-- 'jasmine/*'
+- jasmine/lib/jasmine-2.3.4/jasmine-html.js
+- jasmine/lib/jasmine-2.3.4/jasmine.js
+- gulpfile.js
+

@@ -10,7 +10,7 @@ class InvertedIndex {
    */
   constructor() {
     this.allFiles = {};
-    this.indexedFIles = {};
+    this.indexedFiles = {};
   }
   /**
    * validate
@@ -61,8 +61,8 @@ class InvertedIndex {
     } else {
       return false;
     }
-    this.allFiles[fileName] = this.indexedFIles;
-    this.indexedFIles = {};
+    this.allFiles[fileName] = this.indexedFiles;
+    this.indexedFiles = {};
     return this.allFiles[fileName];
   }
   /**
@@ -98,14 +98,14 @@ class InvertedIndex {
    */
   arrangeIndex(singlePage, position) {
     singlePage.forEach((word) => {
-      if (this.indexedFIles[word]) {
-        if (!this.indexedFIles[word][position]) {
-          this.indexedFIles[word][position] = true;
+      if (this.indexedFiles[word]) {
+        if (!this.indexedFiles[word][position]) {
+          this.indexedFiles[word][position] = true;
         }
       } else {
         let oneIndex = {};
         oneIndex[position] = true;
-        this.indexedFIles[word] = oneIndex;
+        this.indexedFiles[word] = oneIndex;
       }
     });
   }

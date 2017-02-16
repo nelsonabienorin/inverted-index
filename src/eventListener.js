@@ -5,27 +5,25 @@ const invertedUIObj = new InvertedIndexUI();
 // An instance of the App class
 const utilObj = new Util();
 // An event listener to listen to change in uploaded file
-document.getElementById('files_id').addEventListener('change', (e) => {
+$("#files_id").change(function () {
   invertedUIObj.emptyTable('create');
   invertedUIObj.hideNotificationBoard();
+  const fileName = $('#filename_id').val();
+  const uploadedFile = document.getElementById('files_id').files[0];
+  const userEvent = 'change';
+  utilObj.validateFile(uploadedFile, fileName, userEvent);
 });
-
 // An event listener to listen to change in select box by user
-document.getElementById('selectfilename1').addEventListener('change', (e) => {
+$("#selectfilename1").change(function () {
   invertedUIObj.emptyTable('create');
   invertedUIObj.emptyTable('search');
   const selectedFile = $('#selectfilename1').val();
-  const functionCallName = 'create';
-  if (invertedClassObj.allFiles[selectedFile]) {
-    invertedUIObj.displayToView(
-      invertedClassObj.allFiles[selectedFile],
-      functionCallName, selectedFile);
-    const msg = 'Index  Successfully Created !';
-    invertedUIObj.notificationBoard(msg, 'success');
-  }
+  const userEvent = 'select';
+  invertedUIObj.callCreateIndex(userEvent, selectedFile);
+  $('#selectfilename1').prop('selectedIndex', 0);
 });
-// An event listener to listen to when create index button is clicked
-document.getElementById('search_id').addEventListener('click', () => {
+// An event listener to listen to when search index button is clicked
+$("#search_id").click(function () {
   const searchQuery = document.getElementById('search').value;
   if (searchQuery === '') {
     this.msg = 'Empty Input Detected!';
@@ -34,11 +32,15 @@ document.getElementById('search_id').addEventListener('click', () => {
     utilObj.searchIndexTest(searchQuery);
   }
 });
-// An event listener to listen to when search index button is clicked
-document.getElementById('create_id').addEventListener('click', () => {
+// An event listener to listen to when create index button is clicked
+$("#create_id").click(function () {
+  invertedUIObj.emptyTable('create');
+  invertedUIObj.emptyTable('search');
+  const functionCallName = 'create';
+  const userEvent = 'click';
   const fileName = $('#filename_id').val();
   const uploadedFile = document.getElementById('files_id').files[0];
-  utilObj.validateFile(uploadedFile, fileName);
+  invertedUIObj.callCreateIndex(userEvent, fileName);
 });
 // An event listener to listen to when the user starts typing
 $('#search').keyup(() => {

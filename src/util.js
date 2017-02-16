@@ -22,7 +22,7 @@ class Util {
    * @param: {string} fileName
    * @returns {Boolean} returns a boolean
    */
-  validateFile(uploadedFile, fileName) {
+  validateFile(uploadedFile, fileName, userEvent) {
     this.allFileUploads = invertedClassObj.allFiles;
     this.file = uploadedFile;
     const selectedFile = invertedUIObj.getSelectedFileToCreate();
@@ -48,7 +48,7 @@ class Util {
       invertedUIObj.notificationBoard(this.msg, 'error');
       return false;
     }
-    invertedUIObj.fileReader(this.file);
+    invertedUIObj.fileReader(this.file, userEvent);
   }
   /**
    * Function searchIndexTest to

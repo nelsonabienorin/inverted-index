@@ -12,6 +12,8 @@ class InvertedIndexUI {
     this.allFileUploads = {};
     this.indexedFile = {};
     this.fileHighestLength = {};
+    this.jsonContent = {};
+    this.uploadedFileName = '';
   }
   /**
    * getSelectedFileToCreate
@@ -22,64 +24,75 @@ class InvertedIndexUI {
   }
   /**
    * getSelectedFileToSearch
-   * @returns {object} value of selected option.
+   * @return {String} value of selected option.
    */
   getSelectedFileToSearch() {
     return $('#selectfilename2').val();
   }
   /**
    * fileReader
-   * @param {object} file
-   * @return {boolean}
+   * @param {Object} file
+   * @param {String} userEvent
+   * @return {Boolean}
    */
-  fileReader(file) {
+  fileReader(file, userEvent) {
     const fileReader = new FileReader();
     this.allFileUploads = invertedClassObj.allFiles;
     fileReader.onload = () => {
       const content = fileReader.result;
-      const jsonContent = JSON.parse(content);
+      this.jsonContent = JSON.parse(content);
       if (content.indexOf('title') === -1 || content.indexOf('text') === -1) {
         this.msg = 'Invalid content found in JSON file !';
         invertedUIObj.notificationBoard(this.msg, 'error');
         return false;
       }
-      if (jsonContent.length === 0) {
+      if (this.jsonContent.length === 0) {
         this.msg = 'File cannot be EMPTY!';
         invertedUIObj.notificationBoard(this.msg, 'error');
-      } else {
-        if (this.allFileUploads[file.name]) {
-          this.msg = 'File already Exist !';
-          invertedUIObj.notificationBoard(this.msg, 'error');
-        } else {
-          this.msg = 'File uploaded successfully !';
-          invertedUIObj.notificationBoard(this.msg, 'success');
-          this.allFileUploads[file.name] = jsonContent;
-          invertedUIObj.populateSelectBox(file.name);
-          const selectedFile = this.getSelectedFileToCreate();
-          let fileNameToSend = '';
-          if (selectedFile !== null) {
-            fileNameToSend = selectedFile;
-          } else {
-            fileNameToSend = file.name;
-          }
-          this.indexedFile = invertedClassObj.createIndex(fileNameToSend, jsonContent);
-          const functionCallName = 'create';
-          this.displayToView(this.indexedFile, functionCallName, fileNameToSend);
-        }
+      }
+      if (!this.allFileUploads[file.name]) {
+        this.msg = `File ${file.name} uploaded successfully !`;
+        invertedUIObj.notificationBoard(this.msg, 'success');
+        this.allFileUploads[file.name] = this.jsonContent;
+        this.uploadedFileName = file.name;
+        const selectedFile = this.getSelectedFileToCreate();
+        this.callCreateIndex(userEvent, file.name);
       }
     };
     fileReader.readAsText(file);
   }
   /**
+   * callCreateIndex
+   * Makes call to the function createIndex
+   * @param {string} userEvent
+   * @param {string} fileName
+   * @return {Void}
+   */
+  callCreateIndex(userEvent, fileName) {
+    if (userEvent !== 'change') {
+      if (typeof this.allFileUploads[fileName] === 'object') {
+        this.indexedFile = invertedClassObj.createIndex(fileName, this.jsonContent);
+        const functionCallName = 'create';
+        this.displayToView(this.indexedFile, functionCallName, fileName);
+        if (!$(`#selectfilename1 option[value =
+        '${this.uploadedFileName}']`).prop('selected', true).length) {
+          invertedUIObj.populateSelectBox(this.uploadedFileName);
+        }
+      }
+    }
+  }
+  /**
    * displayToView
-   * @param {object} result
-   * @param:{string} functionCallName
-   * @param:{string} filename
+   * @param {Object} result
+   * @param:{String} functionCallName
+   * @param:{String} filename
+   * @return:{Void}
    */
   displayToView(result, functionCallName, filename) {
     let objWithHighIndex = 0;
     $(`#${functionCallName}indextable`).empty();
-    this.content = "<table class='striped'>";
+    this.content = `<a class='btn card'>${filename}</a><br/>`;
+    this.content += "<table class='striped'>";
     this.icon = "<i class='material-icons'>done</i>";
     if (typeof result !== 'undefined') {
       this.content += '<tr class=\'card\' green text-white><th>Word</th>';
@@ -122,13 +135,13 @@ class InvertedIndexUI {
    * @param {string} msg
    * @param:{string} msgType
    */
-
   notificationBoard(msg, msgType) {
     let classAttr = '';
     if (msgType === 'success') {
       classAttr = 'green-text text-darken-3';
     } else {
       classAttr = 'red-text text-darken-3';
+      this.clearInputFileName();
     }
     document.getElementById('uploadinfo_panel').removeAttribute('hidden');
     const uploadInfoId = document.getElementById('uploadinfo_id');
@@ -145,7 +158,9 @@ class InvertedIndexUI {
     const option1 = document.createElement('option');
     const option2 = document.createElement('option');
     option1.text = filename;
+    option1.value = filename;
     option2.text = filename;
+    option2.value = filename;
     selectFilename1.add(option1);
     selectFilename2.add(option2);
     $('.all').show();
@@ -170,7 +185,6 @@ class InvertedIndexUI {
    * @param:{object} result
    * @param:{string} functionCallName
    */
-
   displayToViewAllSearch(result, functionCallName) {
     $(`#${functionCallName}indextable`).empty();
     let jsonFileContent = {};
@@ -179,7 +193,7 @@ class InvertedIndexUI {
     this.content = "<table class='highlight'>";
     for (let jsonFileNames in result) {
       this.content += `<thead><tr><th>File Name: ${jsonFileNames}</th></tr></thead>`;
-      this.content += '<thead class=\'card\'><tr class=\'card\'><th class=\' card\'>Word</th>';
+      this.content += '<thead><tr><th class=\' card\'>Word</th>';
       // this generates/builds the header
       for (let i = 1; i <= this.fileHighestLength[jsonFileNames]; i += 1) {
         this.content += `<th class=\'card\'>Doc ${i} </th>`;
@@ -201,5 +215,17 @@ class InvertedIndexUI {
     }
     this.content += '</tbody></table>';
     $(`#${functionCallName}indextable`).append(this.content);
+  }
+  /**
+   * clearInputFileName
+   * clears the filename in textbox
+   * @param {Void}
+   * @return {Void}
+   */
+  clearInputFileName() {
+    const fileId = $('#files_id');
+    const fileNameId = $('#filename_id');
+    fileId.replaceWith(fileId.val('').clone(true));
+    fileNameId.replaceWith(fileNameId.val('').clone(true));
   }
 }

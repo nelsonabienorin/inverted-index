@@ -49,8 +49,4 @@ gulp.task('test', ['scripts'], () => {
 // configure which files to watch and what tasks to use on file changes
 gulp.task('default', ['browserSync']);
 
-gulp.task('development', ['browserSync', 'watch', 'scripts','test']);
-
-
-
-
+gulp.task('development', ['browserSync', 'watch', 'scripts', 'test']);

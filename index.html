@@ -3,7 +3,7 @@
 
 <head>
   <!--Import Google Icon Font-->
-  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
   <!--Let browser know website is optimized for mobile-->
@@ -46,11 +46,14 @@
           </div>
         </div>
       </form>
+      <a class=" btn cyan darken-4" id="create_id"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>
+       <br/> <br/> <br/>
+      <div class="chip card-panel cyan darken-4 tooltipped white-text" data-position="top" data-delay="50" data-tooltip="Select the file you want to view its index below">
+        View Switcher for Created Index
+      </div>
       <select class="browser-default cyan darken-4 booklist" id="selectfilename1" name="booklist">
         <option value="" disabled selected>Select file</option>
       </select>
-      <br/>
-      <a class=" btn cyan darken-4" id="create_id"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>
       <br/> <br/> <br/>
       <div id="createindextable"></div>
     </div>

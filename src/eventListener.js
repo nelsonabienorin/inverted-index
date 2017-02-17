@@ -36,6 +36,8 @@ $('#search_id').click(() => {
     invertedUIObj.notificationBoard(this.msg, 'error');
   } else {
     utilObj.searchIndexTest(searchQuery);
+    this.msg = `Showing search result(s) for '${searchQuery}'`;
+    invertedUIObj.notificationBoard(this.msg, 'success');
   }
 });
 // An event listener to listen to create index button when clicked
@@ -47,6 +49,8 @@ $('#create_id').click(() => {
   const fileName = $('#filename_id').val();
   const uploadedFile = document.getElementById('files_id').files[0];
   invertedUIObj.callCreateIndex(userEvent, fileName);
+  const msg = `created index for ${fileName}`;
+  invertedUIObj.notificationBoard(msg, 'success');
 });
 // An event listener to listen to when the user starts typing
 $('#search').keyup(() => {

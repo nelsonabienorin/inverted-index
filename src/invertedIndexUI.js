@@ -71,7 +71,9 @@ class InvertedIndexUI {
   callCreateIndex(userEvent, fileName) {
     if (userEvent !== 'change') {
       if (typeof this.allFileUploads[fileName] === 'object') {
-        this.indexedFile = invertedClassObj.createIndex(fileName, this.jsonContent);
+        this.indexedFile = invertedClassObj.createIndex(fileName,
+
+          this.jsonContent);
         const functionCallName = 'create';
         this.displayToView(this.indexedFile, functionCallName, fileName);
         if (!$(`#selectfilename1 option[value =
@@ -102,7 +104,9 @@ class InvertedIndexUI {
         objWithHighIndex = this.fileHighestLength[filename];
       } else {
         for (let term in result) {
-          objWithHighIndex = (Object.keys(result[term]).length > objWithHighIndex) ? Object.keys(result[term]).length : objWithHighIndex;
+          if (Object.keys(result[term]).length > objWithHighIndex) {
+            objWithHighIndex = Object.keys(result[term]).length;
+          }
         }
       }
       this.fileHighestLength[filename] = objWithHighIndex;
@@ -117,7 +121,7 @@ class InvertedIndexUI {
       for (let term in result) {
         this.content += `<tr><td>  ${term}  </td>`;
         let curArr = result[term];
-        for (let j = 0; j < objWithHighIndex; j++) {
+        for (let j = 0; j < objWithHighIndex; j += 1) {
           if (curArr[j] === true) {
             this.content += `<td class = 'green-text'> ${found} </td>`;
           } else {
@@ -192,7 +196,8 @@ class InvertedIndexUI {
     const notFound = 'X';
     this.content = "<table class='highlight'>";
     for (let jsonFileNames in result) {
-      this.content += `<thead><tr><th>File Name: ${jsonFileNames}</th></tr></thead>`;
+      this.content += `<thead><tr><th>File Name: ${jsonFileNames}</th></tr>
+      </thead>`;
       this.content += '<thead><tr><th class=\' card\'>Word</th>';
       // this generates/builds the header
       for (let i = 1; i <= this.fileHighestLength[jsonFileNames]; i += 1) {
@@ -203,7 +208,7 @@ class InvertedIndexUI {
       for (let term in jsonFileContent) {
         this.content += `<tr><td>  ${term}  </td>`;
         let curArr = jsonFileContent[term];
-        for (let j = 0; j < this.fileHighestLength[jsonFileNames]; j++) {
+        for (let j = 0; j < this.fileHighestLength[jsonFileNames]; j += 1) {
           if (curArr[j] === true) {
             this.content += `<td class = 'green-text'> ${found} </td>`;
           } else {

@@ -18,8 +18,8 @@ class Util {
   }
   /**
    * Validate json file
-   * @param {object} uploadedFile
-   * @param: {string} fileName
+   * @param {Object} uploadedFile
+   * @param: {String} fileName
    * @returns {Boolean} returns a boolean
    */
   validateFile(uploadedFile, fileName, userEvent) {
@@ -31,12 +31,10 @@ class Util {
       invertedUIObj.notificationBoard(this.msg, 'error');
       return false;
     }
-    for (const key in this.allFileUploads) {
-      if (key === this.file.name) {
-        this.msg = 'File already Exist!';
-        invertedUIObj.notificationBoard(this.msg, 'error');
-        return false;
-      }
+    if (typeof this.allFileUploads[this.file.name] === 'object') {
+      this.msg = 'File already Exist!';
+      invertedUIObj.notificationBoard(this.msg, 'error');
+      return false;
     }
     if (this.file.type !== 'application/json') {
       this.msg = 'File MUST be JSON!';
@@ -53,30 +51,30 @@ class Util {
   /**
    * Function searchIndexTest to
    * @param {string} searchQuery
-   * @returns {null}
+   * @returns {Void}
    */
   searchIndexTest(searchQuery) {
     const selectedFile = invertedUIObj.getSelectedFileToSearch();
     const functionCallName = 'search';
-    if (typeof this.allFileUploads === 'undefined' || this.allFileUploads[selectedFile] === 'undefined' || !this.file.name || typeof this.file === 'undefined') {
+    if (typeof this.allFileUploads === 'undefined' ||
+      this.allFileUploads[selectedFile] === 'undefined' || !this.file.name ||
+      typeof this.file === 'undefined') {
       this.msg = 'You have to firstly Create Index!';
       invertedUIObj.notificationBoard(this.msg, 'error');
     } else if (typeof this.file.name === 'undefined') {
       this.msg = 'Empty Input Detected!';
       invertedUIObj.notificationBoard(this.msg, 'error');
     } else {
-      if (selectedFile === 'all') {
-        this.searchResult = invertedClassObj.searchIndex(searchQuery, selectedFile);
-        invertedUIObj.displayToViewAllSearch(this.searchResult, functionCallName);
-      }
       if (selectedFile !== null && selectedFile !== 'all') {
         this.searchResult = invertedClassObj.searchIndex(searchQuery,
-          selectedFile);
-        invertedUIObj.displayToView(this.searchResult, functionCallName, selectedFile);
-      }
-      if (!selectedFile) {
-        this.searchResult = invertedClassObj.searchIndex(searchQuery, this.file.name);
-        invertedUIObj.displayToView(this.searchResult, functionCallName, this.file.name);
+        selectedFile);
+        invertedUIObj.displayToView(this.searchResult,
+        functionCallName, selectedFile);
+      } else {
+        this.searchResult = invertedClassObj.searchIndex(searchQuery,
+        selectedFile);
+        invertedUIObj.displayToViewAllSearch(this.searchResult,
+        functionCallName);
       }
     }
   }

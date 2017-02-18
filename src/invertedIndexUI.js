@@ -51,7 +51,8 @@ class InvertedIndexUI {
         invertedUIObj.notificationBoard(this.msg, 'error');
       }
       if (!this.allFileUploads[file.name]) {
-        this.msg = `File ${file.name} uploaded successfully !`;
+        this.msg = `File ${file.name} uploaded successfully,
+        you can now ceate Index`;
         invertedUIObj.notificationBoard(this.msg, 'success');
         this.allFileUploads[file.name] = this.jsonContent;
         this.uploadedFileName = file.name;
@@ -72,7 +73,6 @@ class InvertedIndexUI {
     if (userEvent !== 'change') {
       if (typeof this.allFileUploads[fileName] === 'object') {
         this.indexedFile = invertedClassObj.createIndex(fileName,
-
           this.jsonContent);
         const functionCallName = 'create';
         this.displayToView(this.indexedFile, functionCallName, fileName);

@@ -1,3 +1,6 @@
 node_modules
 coverage
 .coveralls.yml
+jasmine/lib
+jasmine/build/bundle.js
+karma.conf.js

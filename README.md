@@ -9,13 +9,15 @@ An inverted index object that takes a JSON array of text objects and creates an 
 - Accepts Upload of JSON file in below format.
 ```
 [
-    {"title": "Sesame Street",
-    "text":"Sesame Street was and still remains my personal favourite of all the Kids Televison I watched growing up. I find
-    it really fun and most importantly Educative"
-    },
-    {"title": "Andela",
-    "text": "Andela has one of the best work environments and culture that I've ever come accross If not the best. It really is a dream place to learn and work."
-    }
+  {
+    "title": "Alice in Wonderland",
+    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
+  },
+
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring.",
+    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+  }
 ]
 ```
 - Creates Index of all objects with 'title' and 'text' keys in uploaded file.
@@ -48,7 +50,7 @@ The Application is available:
     npm start
     ```
 
-  - Access the application via http://localhost:4000/
+  - Access the application via https://nrotimi-inverted-index.herokuapp.com
 
 
 #### The application was built using the following Technologies and Services:
@@ -59,3 +61,6 @@ The Application is available:
 - Coveralls
 - Hound CI
 - Materialise
+
+#### Limitation of the application
+The Application can not accept multiple upload at a time.

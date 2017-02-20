@@ -1,12 +1,16 @@
 /**
- * InvertedIndexClass class
+ * Inverted Index Class
  * @class
  */
 class InvertedIndex {
-
+  /**
+   * class constructor
+   * For Data Initialization
+   * @constructor
+   */
   constructor() {
     this.allFiles = {};
-    this.indexedFIles = {};
+    this.indexedFiles = {};
   }
   /**
    * validate
@@ -25,6 +29,7 @@ class InvertedIndex {
    * populateIndex
    * @param {string} fileName
    * @param {Object} fileContent
+   * @return null
    */
   populateIndex(fileName, fileContent) {
     let uniqueWords = [];
@@ -45,8 +50,9 @@ class InvertedIndex {
   }
   /**
    * createIndex
-   * @param {string} fileName
-   * @param {Object} fileContent
+   * @param {string}  fileName
+   * @param {object}  fileContent
+   * @return {object} this.allFiles[fileName]
    */
   createIndex(fileName, fileContents) {
     const validateJson = this.validate(fileContents);
@@ -55,8 +61,8 @@ class InvertedIndex {
     } else {
       return false;
     }
-    this.allFiles[fileName] = this.indexedFIles;
-    this.indexedFIles = {};
+    this.allFiles[fileName] = this.indexedFiles;
+    this.indexedFiles = {};
     return this.allFiles[fileName];
   }
   /**
@@ -70,7 +76,7 @@ class InvertedIndex {
   /**
    * getIndex
    * @param   {Object} obj
-   * @returns {Object} obj
+   * @returns {Object}
    */
   removeSpecialXters(obj) {
     return obj.toLowerCase().match(/\w+/g);
@@ -79,7 +85,7 @@ class InvertedIndex {
    * removeDuplicateWords
    * @param   {Object} objTitle
    * @param   {Object} objText
-   * @returns {Object}
+   * @returns {Object} An array of unique words
    */
   removeDuplicateWords(objTitle, objText) {
     return [...new Set([...objTitle, ...objText])];
@@ -88,17 +94,18 @@ class InvertedIndex {
    * arrangeIndex
    * @param {Object} singlePage
    * @param {number} position
+   * @return null
    */
   arrangeIndex(singlePage, position) {
     singlePage.forEach((word) => {
-      if (this.indexedFIles[word]) {
-        if (!this.indexedFIles[word][position]) {
-          this.indexedFIles[word][position] = true;
+      if (this.indexedFiles[word]) {
+        if (!this.indexedFiles[word][position]) {
+          this.indexedFiles[word][position] = true;
         }
       } else {
         let oneIndex = {};
         oneIndex[position] = true;
-        this.indexedFIles[word] = oneIndex;
+        this.indexedFiles[word] = oneIndex;
       }
     });
   }
@@ -106,7 +113,7 @@ class InvertedIndex {
    * searchIndex
    * @param   {String} input
    * @param   {String} fileName
-   * @returns {Object} searchResult
+   * @returns {Object}  searchResult returns searchResult
    */
   searchIndex(input, fileName) {
     let searchResult = {};
@@ -119,9 +126,12 @@ class InvertedIndex {
         let searchSingleJson = this.allFiles[key];
         uniqueQuery.forEach((eachQuery) => {
           if (eachQuery in searchSingleJson) {
-            searchResultKey[eachQuery] = searchSingleJson[eachQuery];
+            searchResultKey[eachQuery] =
+              searchSingleJson[eachQuery];
           } else {
-            searchResultKey[eachQuery] = { 0: false };
+            searchResultKey[eachQuery] = {
+              0: false
+            };
           }
         });
         searchResult[key] = searchResultKey;
@@ -129,7 +139,8 @@ class InvertedIndex {
       return searchResult;
     } else {
       uniqueQuery.forEach((word) => {
-        if (typeof this.allFiles[fileName] !== 'undefined' && this.allFiles[fileName][word]) {
+        if (typeof this.allFiles[fileName] !== 'undefined' && this
+          .allFiles[fileName][word]) {
           searchResult[word] = this.allFiles[fileName][word];
         } else {
           searchResult[word] = {

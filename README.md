@@ -61,6 +61,4 @@ The Application is available:
 - Coveralls
 - Hound CI
 - Materialise
-
-#### Limitation of the application
-The Application can not accept multiple upload at a time.
+- JQuery

@@ -32,17 +32,17 @@ class Util {
       return false;
     }
     if (typeof this.allFileUploads[this.file.name] === 'object') {
-      this.msg = 'File already Exist!';
+      this.msg = 'File(s) already Exist!';
       invertedUIObj.notificationBoard(this.msg, 'error');
       return false;
     }
     if (this.file.type !== 'application/json') {
-      this.msg = 'File MUST be JSON!';
+      this.msg = 'File(s) MUST be JSON!';
       invertedUIObj.notificationBoard(this.msg, 'error');
       return false;
     }
     if (this.file.size === 0) {
-      this.msg = 'File cannot be EMPTY!';
+      this.msg = 'File(s) cannot be EMPTY!';
       invertedUIObj.notificationBoard(this.msg, 'error');
       return false;
     }

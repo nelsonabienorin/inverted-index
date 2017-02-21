@@ -14,6 +14,7 @@ class InvertedIndexUI {
     this.fileHighestLength = {};
     this.jsonContent = {};
     this.uploadedFileName = '';
+    this.invalidFiles = {};
   }
   /**
    * getSelectedFileToCreate
@@ -42,46 +43,31 @@ class InvertedIndexUI {
       const content = fileReader.result;
       this.jsonContent = JSON.parse(content);
       if (content.indexOf('title') === -1 || content.indexOf('text') === -1) {
-        this.msg = 'Invalid content found in JSON file !';
+        this.msg = 'Invalid content found in one of the JSON file(s) !';
         invertedUIObj.notificationBoard(this.msg, 'error');
         return false;
       }
       if (this.jsonContent.length === 0) {
-        this.msg = 'File cannot be EMPTY!';
+        this.msg = 'File(s) cannot be EMPTY!';
         invertedUIObj.notificationBoard(this.msg, 'error');
       }
       if (!this.allFileUploads[file.name]) {
-        this.msg = `File ${file.name} uploaded successfully,
-        you can now ceate Index`;
+        this.msg = `File(s) uploaded successfully,
+        you can now select file to ceate Index`;
         invertedUIObj.notificationBoard(this.msg, 'success');
         this.allFileUploads[file.name] = this.jsonContent;
         this.uploadedFileName = file.name;
-        const selectedFile = this.getSelectedFileToCreate();
-        this.callCreateIndex(userEvent, file.name);
+        if (!$(`#selectfilename1 option[value =
+        '${this.uploadedFileName}']`).prop('selected', true).length) {
+          invertedUIObj.populateCreateSelectBox(this.uploadedFileName);
+        }
+        if (typeof this.allFileUploads[this.uploadedFileName] === 'object') {
+          this.indexedFile = invertedClassObj.createIndex(
+            this.uploadedFileName, this.jsonContent);
+        }
       }
     };
     fileReader.readAsText(file);
-  }
-  /**
-   * callCreateIndex
-   * Makes call to the function createIndex
-   * @param {string} userEvent
-   * @param {string} fileName
-   * @return {Void}
-   */
-  callCreateIndex(userEvent, fileName) {
-    if (userEvent !== 'change') {
-      if (typeof this.allFileUploads[fileName] === 'object') {
-        this.indexedFile = invertedClassObj.createIndex(fileName,
-          this.jsonContent);
-        const functionCallName = 'create';
-        this.displayToView(this.indexedFile, functionCallName, fileName);
-        if (!$(`#selectfilename1 option[value =
-        '${this.uploadedFileName}']`).prop('selected', true).length) {
-          invertedUIObj.populateSelectBox(this.uploadedFileName);
-        }
-      }
-    }
   }
   /**
    * displayToView
@@ -153,19 +139,27 @@ class InvertedIndexUI {
     uploadInfoId.className = classAttr;
   }
   /**
-   * populateSelectBox populate select box if file uploaded
+   * populateCreateSelectBox
+   * populates select box for Create Index
    * @param:{string} filename
    */
-  populateSelectBox(filename) {
+  populateCreateSelectBox(filename) {
     const selectFilename1 = document.getElementById('selectfilename1');
-    const selectFilename2 = document.getElementById('selectfilename2');
     const option1 = document.createElement('option');
-    const option2 = document.createElement('option');
     option1.text = filename;
     option1.value = filename;
+    selectFilename1.add(option1);
+  }
+  /**
+   * populateSearchSelectBox
+   * populates select box for Search Index
+   * @param:{string} filename
+   */
+  populateSearchSelectBox(filename) {
+    const selectFilename2 = document.getElementById('selectfilename2');
+    const option2 = document.createElement('option');
     option2.text = filename;
     option2.value = filename;
-    selectFilename1.add(option1);
     selectFilename2.add(option2);
     $('.all').show();
   }
@@ -196,26 +190,30 @@ class InvertedIndexUI {
     const notFound = 'X';
     this.content = "<table class='highlight'>";
     for (let jsonFileNames in result) {
-      this.content += `<thead><tr><th>File Name: ${jsonFileNames}</th></tr>
+      if (typeof this.fileHighestLength[jsonFileNames] !== 'undefined') {
+        this.content += `<thead><tr><th>File Name: ${jsonFileNames}</th></tr>
       </thead>`;
-      this.content += '<thead><tr><th class=\' card\'>Word</th>';
-      // this generates/builds the header
-      for (let i = 1; i <= this.fileHighestLength[jsonFileNames]; i += 1) {
-        this.content += `<th class=\'card\'>Doc ${i} </th>`;
+        this.content += '<thead><tr><th class=\' card\'>Word</th>';
+        // this generates/builds the header
+        for (let i = 1; i <= this.fileHighestLength[jsonFileNames]; i += 1) {
+          this.content += `<th class=\'card\'>Doc ${i} </th>`;
+        }
       }
       this.content += '</tr></thead><tbody>';
       jsonFileContent = result[jsonFileNames];
       for (let term in jsonFileContent) {
-        this.content += `<tr><td>  ${term}  </td>`;
-        let curArr = jsonFileContent[term];
-        for (let j = 0; j < this.fileHighestLength[jsonFileNames]; j += 1) {
-          if (curArr[j] === true) {
-            this.content += `<td class = 'green-text'> ${found} </td>`;
-          } else {
-            this.content += `<td class = 'red-text'> ${notFound} </td>`;
+        if (typeof this.fileHighestLength[jsonFileNames] !== 'undefined') {
+          this.content += `<tr><td>  ${term}  </td>`;
+          let curArr = jsonFileContent[term];
+          for (let j = 0; j < this.fileHighestLength[jsonFileNames]; j += 1) {
+            if (curArr[j] === true) {
+              this.content += `<td class = 'green-text'> ${found} </td>`;
+            } else {
+              this.content += `<td class = 'red-text'> ${notFound} </td>`;
+            }
           }
+          this.content += '</tr>';
         }
-        this.content += '</tr>';
       }
     }
     this.content += '</tbody></table>';
@@ -230,7 +228,7 @@ class InvertedIndexUI {
   clearInputFileName() {
     const fileId = $('#files_id');
     const fileNameId = $('#filename_id');
-    fileId.replaceWith(fileId.val('').clone(true));
-    fileNameId.replaceWith(fileNameId.val('').clone(true));
+    fileId.replaceWith(fileId.val(''));
+    fileNameId.replaceWith(fileNameId.val(''));
   }
 }

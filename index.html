@@ -38,7 +38,7 @@
           <div class="btn cyan darken-4">
             <i class="material-icons">insert_drive_file</i>
             <span>File</span>
-            <input type="file" id="files_id" accept=".json">
+            <input type="file" id="files_id" accept=".json" multiple>
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text" id="filename_id" placeholder="Upload files here"
@@ -46,15 +46,16 @@
           </div>
         </div>
       </form>
-      <a class=" btn cyan darken-4" id="create_id"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>
-       <br/> <br/> <br/>
-      <div class="chip card-panel cyan darken-4 tooltipped white-text" data-position="top" data-delay="50" data-tooltip="Select the file you want to view its index below">
-        View Switcher for Created Index
+       <div class="chip card-panel cyan darken-4 tooltipped white-text" data-position="top" data-delay="50" data-tooltip="Select the file you want to create its index below">
+       <i class="material-icons left">info_outline</i> Select between files to Create Index below
       </div>
       <select class="browser-default cyan darken-4 booklist" id="selectfilename1" name="booklist">
-        <option value="" disabled selected>Select file</option>
+        <option value="" disabled selected="selected">Select file</option>
       </select>
-      <br/> <br/> <br/>
+      <br/>
+      <a class=" btn cyan darken-4" id="create_id"><i class='material-icons'>format_indent_increase</i>CREATE INDEX</a>
+       <br/> <br/> <br/>
+
       <div id="createindextable"></div>
     </div>
     <div class="col s6">
@@ -83,12 +84,10 @@
       <h5><i class="material-icons right">info_outline</i>How To Use This App</h5>
       <ol>
         <li> Upload a JSON File from your directory</li>
-        <li>Use the "Create Index" Button to have the index created and displayed </li>
-        <li>Use the "Search Files" Button to check the location of a word in the index
-        </li>
-        <li> You can also select an existing file from the select box to either "Create
-          Index"" or "Search Index".
-        </li>
+        <li> Select file from the select box </li>
+        <li> Click the "Create Index" Button to have the index created and displayed </li>
+        <li> Use the "Search Files" Button to search the location of word(s) in the index created </li>
+        <li> You can also search words in all files or a particular file given that the index(es) of the file(s) has been created </li>
       </ol>
     </div>
     <div class="modal-footer">

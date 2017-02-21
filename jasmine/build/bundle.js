@@ -29,6 +29,8 @@ const correctBook = require('../books.json');
 
 const emptyBook = require('../emptyBook.json');
 
+const wrongFormatBook = require('../wrongFormat.json');
+
 const invertedobj = new InvertedIndex();
 
 const bookIndex = invertedobj.createIndex('correctBook.json', correctBook);
@@ -43,6 +45,10 @@ describe('Read book data', () => {
     });
     it('Should return false if book has empty key and value', () => {
       expect(invertedobj.createIndex('emptyBook.json', emptyBook)).toBeFalsy();
+    });
+    it('Should return false if book has invalid key and value', () => {
+      expect(invertedobj.createIndex('wrongFormat.json',
+        wrongFormatBook)).toBeFalsy();
     });
   });
 
@@ -112,6 +118,49 @@ describe('Read book data', () => {
       });
     });
   });
+
+  describe('Get Index', () => {
+    it(`Should verify that the correct object
+      returned is not null`, () => {
+      expect(invertedobj.getIndex('correctBook.json')).not.toBe(null);
+    });
+
+    it(`Should verify that the type of the correct object
+      returned and is not an object array`, () => {
+      expect(!Array.isArray(invertedobj.getIndex('correctBook.json')
+      )).toBeTruthy();
+    });
+
+    it('Should return  an object upon reading a json filename', () => {
+      expect(typeof invertedobj.getIndex('correctBook.json')).toEqual('object');
+    });
+
+    it('Should return correct index when alice key is pass', () => {
+      expect(invertedobj.getIndex('correctBook.json').alice).toEqual({
+        0: true
+      });
+    });
+
+    it('Should return correct index when passing and', () => {
+      expect(invertedobj.getIndex('correctBook.json').and).toEqual({
+        0: true,
+        1: true
+      });
+    });
+  });
 });
 
-},{"../books.json":1,"../emptyBook.json":2}]},{},[3])
+
+},{"../books.json":1,"../emptyBook.json":2,"../wrongFormat.json":4}],4:[function(require,module,exports){
+module.exports=
+[
+  {  "name" : "Alice in Wonderland",
+    "value": "Alice falls into a rabbit hole and enters a world full of imagination."
+  }
+,
+   { "name": "The Lord of the Rings: The Fellowship of the Ring.",
+    "value": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+
+   }
+]
+},{}]},{},[3])

@@ -14,8 +14,9 @@ class InvertedIndex {
   }
   /**
    * validate
+   * This checks if a json object has title and text key
    * @param {Object} json
-   * @return{Boolean}
+   * @return {Boolean}
    */
   validate(json) {
     for (let item of json) {
@@ -27,6 +28,8 @@ class InvertedIndex {
   }
   /**
    * populateIndex
+   * Populates the indexes and values of the words by
+   * removing special characters, duplicates and arrange index
    * @param {String} fileName
    * @param {Object} fileContent
    * @return {Void}
@@ -50,8 +53,9 @@ class InvertedIndex {
   }
   /**
    * createIndex
+   * creates the index for a particular file
    * @param {String}  fileName
-   * @param {Object}  fileContent
+   * @param {Object}  fileContents
    * @return {Object} this.allFiles[fileName]
    */
   createIndex(fileName, fileContents) {
@@ -67,6 +71,7 @@ class InvertedIndex {
   }
   /**
    * getIndex
+   * Returns the created indexes for a particular file
    * @param   {String} fileName
    * @returns {Object} allFiles
    */
@@ -74,7 +79,8 @@ class InvertedIndex {
     return this.allFiles[fileName];
   }
   /**
-   * getIndex
+   * removeSpecialXters
+   * Searches through all words in object and remove special characters
    * @param   {Object} obj
    * @returns {Object}
    */
@@ -83,6 +89,7 @@ class InvertedIndex {
   }
   /**
    * removeDuplicateWords
+   * Removes multiple occurence of words
    * @param   {Object} objTitle
    * @param   {Object} objText
    * @returns {Object}
@@ -92,16 +99,15 @@ class InvertedIndex {
   }
   /**
    * arrangeIndex
+   * Arranges and sets the position of each word
    * @param {Object} singlePage
    * @param {number} position
    * @return {Void}
    */
   arrangeIndex(singlePage, position) {
     singlePage.forEach((word) => {
-      if (this.indexedFiles[word]) {
-        if (!this.indexedFiles[word][position]) {
-          this.indexedFiles[word][position] = true;
-        }
+      if (this.indexedFiles[word] && !this.indexedFiles[word][position]) {
+        this.indexedFiles[word][position] = true;
       } else {
         let oneIndex = {};
         oneIndex[position] = true;
@@ -111,9 +117,10 @@ class InvertedIndex {
   }
   /**
    * searchIndex
+   * Searches for a string in indexes created
    * @param   {String} input
    * @param   {String} fileName
-   * @returns {Object}  searchResult returns searchResult
+   * @returns {Object}
    */
   searchIndex(input, fileName) {
     let searchResult = {};
@@ -153,14 +160,11 @@ class InvertedIndex {
   }
   /**
    * isJsonEmpty
+   * Checks if an object is empty
    * @param   {Object} book
    * @returns {Boolean}
    */
   isJsonEmpty(book) {
-    if (book.length === 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return (book.length === 0) ? true : false;
   }
 }

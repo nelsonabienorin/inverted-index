@@ -44,11 +44,12 @@ describe('Read book data', () => {
       expect(invertedobj.isJsonEmpty(correctBook)).toBeFalsy();
     });
     it('Should return false if book has empty key and value', () => {
-      expect(invertedobj.createIndex('emptyBook.json', emptyBook)).toBeFalsy();
+      expect(invertedobj.createIndex('emptyBook.json',
+      emptyBook)).toEqual(false);
     });
     it('Should return false if book has invalid key and value', () => {
       expect(invertedobj.createIndex('wrongFormat.json',
-        wrongFormatBook)).toBeFalsy();
+        wrongFormatBook)).toEqual(false);
     });
   });
 

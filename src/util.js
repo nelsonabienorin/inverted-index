@@ -16,11 +16,14 @@ class Util {
     this.searchResult = {};
     this.file = {};
   }
+
   /**
-   * Validate json file
-   * @param {Object} uploadedFile
-   * @param: {String} fileName
-   * @returns {Boolean} returns a boolean
+   * validateFile
+   * Validates json file
+   * @param {Object} uploadedFile file uploaded by the user
+   * @param {String} fileName name of the file been uploaded
+   * @param {String} userEvent event been created by user
+   * @returns {Boolean} returns a boolean which could be true or false
    */
   validateFile(uploadedFile, fileName, userEvent) {
     this.allFileUploads = invertedClassObj.allFiles;
@@ -48,10 +51,11 @@ class Util {
     }
     invertedUIObj.fileReader(this.file, userEvent);
   }
+
   /**
    * Function searchIndexTest to
    * @param {string} searchQuery
-   * @returns {Void}
+   * @returns {Void} Passes result to another function
    */
   searchIndexTest(searchQuery) {
     const selectedFile = invertedUIObj.getSelectedFileToSearch();

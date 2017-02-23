@@ -16,6 +16,7 @@ class InvertedIndexUI {
     this.uploadedFileName = '';
     this.invalidFiles = {};
   }
+
   /**
    * getSelectedFileToCreate
    * @returns {object} value of selected option.
@@ -23,6 +24,7 @@ class InvertedIndexUI {
   getSelectedFileToCreate() {
     return $('#selectfilename1').val();
   }
+
   /**
    * getSelectedFileToSearch
    * @return {String} value of selected option.
@@ -30,11 +32,12 @@ class InvertedIndexUI {
   getSelectedFileToSearch() {
     return $('#selectfilename2').val();
   }
+
   /**
    * fileReader
-   * @param {Object} file
-   * @param {String} userEvent
-   * @return {Boolean}
+   * @param {Object} file file been uploaded by the user
+   * @param {String} userEvent event been created by user
+   * @return {Boolean} returns a true or false value
    */
   fileReader(file, userEvent) {
     const fileReader = new FileReader();
@@ -69,12 +72,14 @@ class InvertedIndexUI {
     };
     fileReader.readAsText(file);
   }
+
   /**
    * displayToView
+   * This displays search results to the user
    * @param {Object} result
-   * @param:{String} functionCallName
-   * @param:{String} filename
-   * @return:{Void}
+   * @param {String} functionCallName the name of function making call
+   * @param {String} filename the name of the file
+   * @return {Void} does not return anything to other function
    */
   displayToView(result, functionCallName, filename) {
     let objWithHighIndex = 0;
@@ -120,10 +125,12 @@ class InvertedIndexUI {
       $(`#${functionCallName}indextable`).append(this.content);
     }
   }
+
   /**
    * notificationBoard output result to html
    * @param {string} msg
-   * @param:{string} msgType
+   * @param {string} msgType
+   * @returns {void} does not return result to other function
    */
   notificationBoard(msg, msgType) {
     let classAttr = '';
@@ -138,10 +145,12 @@ class InvertedIndexUI {
     uploadInfoId.innerHTML = msg;
     uploadInfoId.className = classAttr;
   }
+
   /**
    * populateCreateSelectBox
    * populates select box for Create Index
-   * @param:{string} filename
+   * @param {string} filename the name of the file to populate the selectbox
+   * @returns {void} returns nothing to other function
    */
   populateCreateSelectBox(filename) {
     const selectFilename1 = document.getElementById('selectfilename1');
@@ -150,10 +159,12 @@ class InvertedIndexUI {
     option1.value = filename;
     selectFilename1.add(option1);
   }
+
   /**
    * populateSearchSelectBox
    * populates select box for Search Index
-   * @param:{string} filename
+   * @param {string} filename
+   * @returns {void} Does not return result to other function
    */
   populateSearchSelectBox(filename) {
     const selectFilename2 = document.getElementById('selectfilename2');
@@ -163,25 +174,33 @@ class InvertedIndexUI {
     selectFilename2.add(option2);
     $('.all').show();
   }
+
   /**
+   * hideNotificationBoard
    * hideNotificationBoard hides notification
+   * @returns {void} Does not return result to other function
    */
   hideNotificationBoard() {
     const panelId = document.getElementById('uploadinfo_panel');
     const attr = document.createAttribute('hidden');
     panelId.setAttributeNode(attr);
   }
+
   /**
    * emptyTable empty the table content
    * @param {string} tableName
+   * @returns {void} returns nothing
    */
   emptyTable(tableName) {
     $(`#${tableName}indextable`).empty();
   }
+
   /**
    * displayToViewAllSearch
-   * @param:{object} result
-   * @param:{string} functionCallName
+   * Displays result to the front end
+   * @param {object} result
+   * @param {string} functionCallName
+   * @returns {void} Does not return result to other function
    */
   displayToViewAllSearch(result, functionCallName) {
     $(`#${functionCallName}indextable`).empty();
@@ -219,11 +238,12 @@ class InvertedIndexUI {
     this.content += '</tbody></table>';
     $(`#${functionCallName}indextable`).append(this.content);
   }
+
   /**
    * clearInputFileName
    * clears the filename in textbox
-   * @param {Void}
-   * @return {Void}
+   * @param {Void} Does not return result to other function
+   * @return {Void} Does not return result to other function
    */
   clearInputFileName() {
     const fileId = $('#files_id');

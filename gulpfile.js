@@ -36,8 +36,8 @@ gulp.task('scripts', () => {
 gulp.task('test', ['scripts'], () => {
   testBrowserSync.init({
     server: {
-      baseDir: ['./jasmine', './src'],
-      index: 'SpecRunner.html'
+      baseDir: ['./'],
+      index: 'spec.html'
     },
     port: 3120,
     ui: false,

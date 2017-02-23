@@ -26,6 +26,8 @@
     "karma-coveralls": "^1.1.2",
     "karma-firefox-launcher": "^1.0.0",
     "karma-jasmine": "^1.1.0",
+    "karma-spec-as-html-reporter": "0.0.3",
+    "karma-spec-reporter": "0.0.26",
     "rename": "^1.0.4",
     "requirejs": "^2.3.2",
     "webpack": "^1.14.0"
@@ -37,7 +39,8 @@
   },
   "scripts": {
     "start": "gulp",
-    "test": "karma start"
+    "test": "karma start",
+    "lint": "./node_modules/.bin/eslint src/js/*.js"
   },
   "repository": {
     "type": "git",

@@ -25,6 +25,10 @@ module.exports=[
 ]
 
 },{}],3:[function(require,module,exports){
+/* eslint-disable no-unused-vars*/
+/* eslint-disable no-undef*/
+/* eslint-disable no-dupe-keys*/
+/* eslint-disable no-multi-assign*/
 const correctBook = require('../books.json');
 
 const emptyBook = require('../emptyBook.json');
@@ -38,10 +42,10 @@ const bookIndex = invertedobj.createIndex('correctBook.json', correctBook);
 describe('Read book data', () => {
   describe('Read book data', () => {
     it('should return true if book is empty', () => {
-      expect(invertedobj.isJsonEmpty([])).toBeTruthy();
+      expect(InvertedIndex.isJsonEmpty([])).toBeTruthy();
     });
     it('Should return false if book is not empty', () => {
-      expect(invertedobj.isJsonEmpty(correctBook)).toBeFalsy();
+      expect(InvertedIndex.isJsonEmpty(correctBook)).toBeFalsy();
     });
     it('Should return false if book has empty key and value', () => {
       expect(invertedobj.createIndex('emptyBook.json',
@@ -96,7 +100,6 @@ describe('Read book data', () => {
      words in the search query that are not found in a file`, () => {
       expect(invertedobj.searchIndex('esther', 'correctBook.json')).toEqual({
         esther: {
-          0: false,
           0: false
         }
       });
@@ -150,7 +153,6 @@ describe('Read book data', () => {
     });
   });
 });
-
 
 },{"../books.json":1,"../emptyBook.json":2,"../wrongFormat.json":4}],4:[function(require,module,exports){
 module.exports=

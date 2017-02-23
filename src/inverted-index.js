@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars*/
+/* eslint-disable no-multi-assign*/
 /**
  * Inverted Index Class
  * @class
@@ -42,13 +44,13 @@ class InvertedIndex {
    * @returns {undefined}
    */
   populateIndex(fileName, fileContent) {
-    let uniqueWords = [];
+    const uniqueWords = [];
     fileContent.forEach((obj) => {
       if (obj.title && obj.text) {
-        const objTitle = this.removeSpecialXters(obj.title);
-        const objText = this.removeSpecialXters(obj.text);
+        const objTitle = InvertedIndex.removeSpecialXters(obj.title);
+        const objText = InvertedIndex.removeSpecialXters(obj.text);
         const objTitleText = `${objTitle},${objText}`;
-        uniqueWords.push(this.removeDuplicateWords(objTitle, objText));
+        uniqueWords.push(InvertedIndex.removeDuplicateWords(objTitle, objText));
       }
     });
     uniqueWords.forEach((singlePage, position) => {
@@ -64,7 +66,7 @@ class InvertedIndex {
    * @return {Object} this.allFiles[fileName]
    */
   createIndex(fileName, fileContents) {
-    let validateJson = this.validate(fileContents);
+    const validateJson = this.validate(fileContents);
     if (validateJson === 'true') {
       this.populateIndex(fileName, fileContents);
     } else {
@@ -91,7 +93,7 @@ class InvertedIndex {
    * @param   {Object} obj
    * @returns {Object} returns words void of special characters
    */
-  removeSpecialXters(obj) {
+  static removeSpecialXters(obj) {
     return obj.toLowerCase().match(/\w+/g);
   }
 
@@ -102,7 +104,7 @@ class InvertedIndex {
    * @param   {Object} objText Object containing page text
    * @returns {Object} A unique set of words from the page title and text
    */
-  removeDuplicateWords(objTitle, objText) {
+  static removeDuplicateWords(objTitle, objText) {
     return [...new Set([...objTitle, ...objText])];
   }
 
@@ -118,7 +120,7 @@ class InvertedIndex {
       if (this.indexedFiles[word] && !this.indexedFiles[word][position]) {
         this.indexedFiles[word][position] = true;
       } else {
-        let oneIndex = {};
+        const oneIndex = {};
         oneIndex[position] = true;
         this.indexedFiles[word] = oneIndex;
       }
@@ -133,14 +135,14 @@ class InvertedIndex {
    * @returns {Object} searchResult object containing search results
    */
   searchIndex(input, fileName) {
-    let searchResult = {};
-    let allSearchResult = {};
-    let query = this.removeSpecialXters(input);
-    let uniqueQuery = this.removeDuplicateWords(query, []);
-    if (fileName === 'all' || fileName === null) {
-      for (let key in this.allFiles) {
-        let searchResultKey = {};
-        let searchSingleJson = this.allFiles[key];
+    const searchResult = {};
+    const allSearchResult = {};
+    const query = InvertedIndex.removeSpecialXters(input);
+    const uniqueQuery = InvertedIndex.removeDuplicateWords(query, []);
+    if (fileName === 'all') {
+      Object.keys(this.allFiles).forEach((key) => {
+        const searchResultKey = {};
+        const searchSingleJson = this.allFiles[key];
         uniqueQuery.forEach((eachQuery) => {
           if (eachQuery in searchSingleJson) {
             searchResultKey[eachQuery] =
@@ -152,7 +154,7 @@ class InvertedIndex {
           }
         });
         searchResult[key] = searchResultKey;
-      }
+      });
     } else {
       uniqueQuery.forEach((word) => {
         if (typeof this.allFiles[fileName] !== 'undefined' && this
@@ -174,7 +176,10 @@ class InvertedIndex {
    * @param   {Object} book A book object
    * @returns {Boolean} A boolean value to indicate if book is empty or not
    */
-  isJsonEmpty(book) {
-    return (book.length === 0) ? true : false;
+  static isJsonEmpty(book) {
+    if (book.length === 0) {
+      return true;
+    }
+    return false;
   }
 }

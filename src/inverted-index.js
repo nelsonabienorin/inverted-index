@@ -47,12 +47,14 @@ class InvertedIndex {
     const uniqueWords = [];
     fileContent.forEach((obj) => {
       if (obj.title && obj.text) {
+        // objTitle and objText are arrays of page title and text
         const objTitle = InvertedIndex.removeSpecialXters(obj.title);
         const objText = InvertedIndex.removeSpecialXters(obj.text);
-        const objTitleText = `${objTitle},${objText}`;
         uniqueWords.push(InvertedIndex.removeDuplicateWords(objTitle, objText));
       }
     });
+    // uniqueWords is an array of each pages each
+    // having an array of uniqueWords
     uniqueWords.forEach((singlePage, position) => {
       this.arrangeIndex(singlePage, position);
     });
@@ -116,10 +118,15 @@ class InvertedIndex {
    * @return {Void} Does not return result to other function
    */
   arrangeIndex(singlePage, position) {
+    // this.indexedFiles[word] can be of Object form {0: true} or {1: true}
+    // !this.indexedFiles[word][position] is expected to be boolean true for
+    // word found in a new location
     singlePage.forEach((word) => {
       if (this.indexedFiles[word] && !this.indexedFiles[word][position]) {
+        // word is old and is occurring in another page/document position > 0
         this.indexedFiles[word][position] = true;
       } else {
+        // word is new i.e. word occurs for the first time
         const oneIndex = {};
         oneIndex[position] = true;
         this.indexedFiles[word] = oneIndex;
@@ -140,13 +147,17 @@ class InvertedIndex {
     const query = InvertedIndex.removeSpecialXters(input);
     const uniqueQuery = InvertedIndex.removeDuplicateWords(query, []);
     if (fileName === 'all') {
+      // key represent the current filename
       Object.keys(this.allFiles).forEach((key) => {
+        // searchResultKey is to store search results
         const searchResultKey = {};
-        const searchSingleJson = this.allFiles[key];
+        // searchCurrentJson is an object of indexes for the current file
+        const searchCurrentJson = this.allFiles[key];
         uniqueQuery.forEach((eachQuery) => {
-          if (eachQuery in searchSingleJson) {
+          if (eachQuery in searchCurrentJson) {
+            // current search word token exists
             searchResultKey[eachQuery] =
-              searchSingleJson[eachQuery];
+              searchCurrentJson[eachQuery];
           } else {
             searchResultKey[eachQuery] = {
               0: false

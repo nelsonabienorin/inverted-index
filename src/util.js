@@ -82,4 +82,22 @@ class Util {
       }
     }
   }
+
+  /**
+   * validate
+   * This checks if a json object has title and text key
+   * @param {Object} book
+   * @returns {Boolean}
+   */
+  static validate(book) {
+    let ifKeyExist = false;
+    book.forEach((doc) => {
+      if (doc.title && doc.text) {
+        ifKeyExist = true;
+      } else {
+        ifKeyExist = false;
+      }
+    });
+    return this.ifKeyExist;
+  }
 }

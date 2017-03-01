@@ -15,15 +15,40 @@ const bookIndex = invertedobj.createIndex('correctBook.json', correctBook);
 describe('Read book data', () => {
   describe('Read book data', () => {
     it('should return true if book is empty', () => {
-      expect(InvertedIndex.isJsonEmpty([])).toBeTruthy();
+      expect(Helper.isDocEmpty([])).toBeTruthy();
     });
+
     it('Should return false if book is not empty', () => {
-      expect(InvertedIndex.isJsonEmpty(correctBook)).toBeFalsy();
+      expect(Helper.isDocEmpty(correctBook)).toBeFalsy();
     });
+
+    it('Should return false if book has invalid key and value', () => {
+      expect(Helper.validate(
+        wrongFormatBook)).toEqual(false);
+    });
+
+    it(`Should return array of words that does not
+      have special characters`, () => {
+      expect(Helper.removeSpecialXters(`Comment: Eze goes to school
+      (everyday, weekly).`)).toEqual(['comment', 'eze', 'goes', 'to',
+        'school', 'everyday', 'weekly'
+      ]);
+    });
+
+    it(`Should remove duplicates and return an
+      array of unique words`, () => {
+      expect(Helper.removeDuplicateWords(['And', 'Eze', 'goes', 'to',
+        'Eze', 'Intl', 'school', 'of', 'music', 'of', 'Nigeria'
+      ])).toEqual(['And', 'Eze', 'goes', 'to',
+        'Intl', 'school', 'of', 'music', 'Nigeria'
+      ]);
+    });
+
     it('Should return false if book has empty key and value', () => {
       expect(invertedobj.createIndex('emptyBook.json',
-      emptyBook)).toEqual(false);
+        emptyBook)).toEqual(false);
     });
+
     it('Should return false if book has invalid key and value', () => {
       expect(invertedobj.createIndex('wrongFormat.json',
         wrongFormatBook)).toEqual(false);
@@ -104,8 +129,7 @@ describe('Read book data', () => {
 
     it(`Should verify that the type of the correct object
       returned and is not an object array`, () => {
-      expect(!Array.isArray(invertedobj.getIndex('correctBook.json')
-      )).toBeTruthy();
+      expect(!Array.isArray(invertedobj.getIndex('correctBook.json'))).toBeTruthy();
     });
 
     it('Should return  an object upon reading a json filename', () => {

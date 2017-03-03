@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-vars*/
+/* eslint-disable no-multi-assign*/
+/* eslint-disable no-undef*/
+
 /**
  * Inverted Index Class
  * @class
@@ -12,52 +16,39 @@ class InvertedIndex {
     this.allFiles = {};
     this.indexedFiles = {};
   }
+
   /**
-   * validate
-   * @param {Object} json
-   * @return{Boolean}
-   */
-  validate(json) {
-    for (let item of json) {
-      if (!item.title && !item.text) {
-        return false;
-      }
-    }
-    return true;
-  }
-  /**
-   * populateIndex
-   * @param {string} fileName
+   * sanitizeWords
+   * removing special characters, duplicates and arrange index
+   * @param {String} fileName
    * @param {Object} fileContent
-   * @return null
+   * @returns {any} does not result to other method
    */
-  populateIndex(fileName, fileContent) {
-    let uniqueWords = [];
-    let objTitle = '';
-    let objText = '';
-    let objTitleText;
-    fileContent.forEach((obj) => {
-      if (obj.title && obj.text) {
-        objTitle = this.removeSpecialXters(obj.title);
-        objText = this.removeSpecialXters(obj.text);
-        objTitleText = `${objTitle},${objText}`;
-        uniqueWords.push(this.removeDuplicateWords(objTitle, objText));
+  static sanitizeWords(fileName, fileContent) {
+    const uniqueWords = [];
+    fileContent.forEach((doc) => {
+      if (doc.title && doc.text) {
+        const docText = Helper.removeSpecialXters(doc.text);
+        uniqueWords.push(Helper.removeMultiWordsAndMakeArray(docText));
       }
     });
-    uniqueWords.forEach((singlePage, position) => {
-      this.arrangeIndex(singlePage, position);
-    });
+    return uniqueWords;
   }
+
   /**
    * createIndex
-   * @param {string}  fileName
-   * @param {object}  fileContent
-   * @return {object} this.allFiles[fileName]
+   * creates the index for a particular file
+   * @param {String}  fileName
+   * @param {Object}  fileContents
+   * @return {Object} this.allFiles[fileName]
    */
   createIndex(fileName, fileContents) {
-    const validateJson = this.validate(fileContents);
-    if (validateJson) {
-      this.populateIndex(fileName, fileContents);
+    const validateJson = Helper.validate(fileContents);
+    if (validateJson === true) {
+      const uniqueWords = InvertedIndex.sanitizeWords(fileName, fileContents);
+      uniqueWords.forEach((doc, position) => {
+        this.arrangeIndex(doc, position);
+      });
     } else {
       return false;
     }
@@ -65,80 +56,65 @@ class InvertedIndex {
     this.indexedFiles = {};
     return this.allFiles[fileName];
   }
+
   /**
    * getIndex
-   * @param   {string} fileName
+   * Returns the created indexes for a particular file
+   * @param   {String} fileName
    * @returns {Object} allFiles
    */
   getIndex(fileName) {
     return this.allFiles[fileName];
   }
-  /**
-   * getIndex
-   * @param   {Object} obj
-   * @returns {Object}
-   */
-  removeSpecialXters(obj) {
-    return obj.toLowerCase().match(/\w+/g);
-  }
-  /**
-   * removeDuplicateWords
-   * @param   {Object} objTitle
-   * @param   {Object} objText
-   * @returns {Object} An array of unique words
-   */
-  removeDuplicateWords(objTitle, objText) {
-    return [...new Set([...objTitle, ...objText])];
-  }
+
   /**
    * arrangeIndex
-   * @param {Object} singlePage
-   * @param {number} position
-   * @return null
+   * Arranges and sets the position of each word
+   * @param {Object} singlePage An object that have page title and text
+   * @param {number} position The position of where a word is located
+   * @return {any} Does not return result to other function
    */
   arrangeIndex(singlePage, position) {
     singlePage.forEach((word) => {
-      if (this.indexedFiles[word]) {
-        if (!this.indexedFiles[word][position]) {
-          this.indexedFiles[word][position] = true;
-        }
+      if (this.indexedFiles[word] && !this.indexedFiles[word][position]) {
+        this.indexedFiles[word][position] = true;
       } else {
-        let oneIndex = {};
-        oneIndex[position] = true;
-        this.indexedFiles[word] = oneIndex;
+        const wordIndex = {};
+        wordIndex[position] = true;
+        this.indexedFiles[word] = wordIndex;
       }
     });
   }
+
   /**
    * searchIndex
-   * @param   {String} input
-   * @param   {String} fileName
-   * @returns {Object}  searchResult returns searchResult
+   * Searches for a string in indexes created
+   * @param   {String} input input query supplied by the user
+   * @param   {String} fileName the filename user wants to search
+   * @returns {Object} searchResult object containing search results
    */
   searchIndex(input, fileName) {
-    let searchResult = {};
-    let allSearchResult = {};
-    let query = this.removeSpecialXters(input);
-    let uniqueQuery = this.removeDuplicateWords(query, []);
+    const searchResult = {};
+    const query = Helper.removeSpecialXters(input);
+    const uniqueQueryWords = Helper.removeMultiWordsAndMakeArray(query);
     if (fileName === 'all') {
-      for (let key in this.allFiles) {
-        let searchResultKey = {};
-        let searchSingleJson = this.allFiles[key];
-        uniqueQuery.forEach((eachQuery) => {
-          if (eachQuery in searchSingleJson) {
-            searchResultKey[eachQuery] =
-              searchSingleJson[eachQuery];
+      Object.keys(this.allFiles).forEach((key) => {
+        const searchResultKey = {};
+        const currentDoc = this.allFiles[key];
+        uniqueQueryWords.forEach((word) => {
+          if (word in currentDoc) {
+            searchResultKey[word] =
+              currentDoc[word];
           } else {
-            searchResultKey[eachQuery] = {
+            searchResultKey[word] = {
               0: false
             };
           }
         });
         searchResult[key] = searchResultKey;
-      }
-      return searchResult;
+      });
     } else {
-      uniqueQuery.forEach((word) => {
+      uniqueQueryWords.forEach((word) => {
         if (typeof this.allFiles[fileName] !== 'undefined' && this
           .allFiles[fileName][word]) {
           searchResult[word] = this.allFiles[fileName][word];
@@ -150,17 +126,5 @@ class InvertedIndex {
       });
     }
     return searchResult;
-  }
-  /**
-   * isJsonEmpty
-   * @param   {Object} book
-   * @returns {Boolean}
-   */
-  isJsonEmpty(book) {
-    if (book.length === 0) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

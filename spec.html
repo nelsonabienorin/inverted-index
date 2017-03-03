@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Spec for</title>
+  <style>
+.karma-spec-as-html {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: .9em;
+  line-height: 1.5;
+}
+.karma-spec-as-html .suite ul {list-style-type: none; margin-top: .4em }
+.karma-spec-as-html .suite li { margin-bottom: .8em; }
+.karma-spec-as-html .suite { margin-top: 1em }
+.karma-spec-as-html .success {color: green }
+.karma-spec-as-html .success:before { content: "✓ " }
+.karma-spec-as-html .failure {color: red }
+.karma-spec-as-html .failure:before { content: "✗ " }
+  </style>
+</head>
+<body>
+  <div class="karma-spec-as-html">
+<h1>Spec</h1><div class="suite">
+<ul>
+    <li class="suite">Read book data
+      <ul>
+        <li class="success">Should return false if book is not empty</li>
+        <li class="success">Should return false if book has invalid key and value</li>
+        <li class="success">Should return array of words that does not
+      have special characters</li>
+        <li class="success">Should remove duplicates and return an
+      array of unique words</li>
+        <li class="success">Should return false if book has empty key and value</li>
+        <li class="success">Should return false if book has invalid key and value</li>
+      </ul>
+    </li>
+    <li class="suite">Populate Index
+      <ul>
+        <li class="success">should read the book and make sure
+     it is an instance of an object</li>
+        <li class="success">Should ensure index is correct</li>
+      </ul>
+    </li>
+    <li class="suite">Search Index
+      <ul>
+        <li class="success">Should return an object of the indices of
+     the correct objects that contain the words in
+     the search query</li>
+        <li class="success">Should return the correct search index for all files when
+    searching for 'alice and'</li>
+        <li class="success">Should return the correct indexes for a single file when
+    index is been created</li>
+        <li class="success">Should return an object of false value indexes of
+     words in the search query that are not found in a file</li>
+        <li class="success">Should return an object of false value indexes of words
+    in the search query that doesnot exist in all the files
+    searching for 'freeman armanda'</li>
+      </ul>
+    </li>
+    <li class="suite">Get Index
+      <ul>
+        <li class="success">Should verify that the correct object
+      returned is not null</li>
+        <li class="success">Should return  an object upon reading a json filename</li>
+        <li class="success">Should verify that the type of the correct object
+      returned and is not an object array</li>
+        <li class="success">Should return correct index when alice key is pass</li>
+        <li class="success">Should return correct index when passing and</li>
+      </ul>
+    </li>
+</ul>
+</div>
+
+<p class="summaryOfTestRun">Chrome 56.0.2924 (Mac OS X 10.11.6): Executed 18 of 18 SUCCESS (0.03 secs / 0.009 secs)</p>
+
+  </div>
+</body>
+</html>

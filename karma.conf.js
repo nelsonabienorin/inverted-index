@@ -20,6 +20,7 @@ module.exports = (config) => {
     // list of files / patterns to load in the browser
     files: [
       'src/inverted-index.js',
+       'src/helper.js',
       // 'jasmine/spec/inverted-index-test.js',
       'jasmine/build/bundle.js'
     ],
@@ -40,7 +41,7 @@ module.exports = (config) => {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage', 'coveralls'],
+    reporters: ['progress', 'coverage', 'coveralls','spec-as-html'],
 
     coverageReporter: {
       type: 'lcov',

@@ -15,6 +15,7 @@
       background-color:#006064 !important;
       color: white !important;
     }
-    #selectfilename2 {
-      display: none;
+    .infoIcon {
+      margin-right: 0px !important;
     }
+

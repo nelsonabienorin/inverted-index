@@ -9,12 +9,14 @@ $('#files_id').change(() => {
   invertedUIObj.emptyTable('create');
   invertedUIObj.hideNotificationBoard();
   const fileName = $('#filename_id').val();
-  const uploadedFile = document.getElementById('files_id').files[0];
+  const uploadedFiles = document.getElementById('files_id').files;
   const userEvent = 'change';
-  utilObj.validateFile(uploadedFile, fileName, userEvent);
+  for (let j = 0; j < uploadedFiles.length; j += 1) {
+    utilObj.validateFile(uploadedFiles[j], fileName, userEvent);
+  }
 });
 // An event listener to listen to change in select box by user
-$('#selectfilename1').change(() => {
+$('#create_id').click(() => {
   invertedUIObj.emptyTable('create');
   invertedUIObj.emptyTable('search');
   const selectedFile = $('#selectfilename1').val();
@@ -23,34 +25,33 @@ $('#selectfilename1').change(() => {
     invertedUIObj.displayToView(
       invertedClassObj.allFiles[selectedFile],
       functionCallName, selectedFile);
-    const msg = `created index view switched to ${selectedFile}`;
+    const msg = `create index successfully,
+    view switched to file ${selectedFile}`;
     invertedUIObj.notificationBoard(msg, 'success');
+    const fileExist = $(`#selectfilename2
+    option[value='${selectedFile}']`).length > 0;
+    if (fileExist === false) {
+      invertedUIObj.populateSearchSelectBox(selectedFile);
+    }
   }
-  $('#selectfilename1').prop('selectedIndex', 0);
 });
-// An event listener to listen to when search index button is clicked
+// An event listener to listen to when create index button is clicked
 $('#search_id').click(() => {
+  let noOfOptions = $('#selectfilename2 option').filter(() => {
+    return this.value !== null;
+  }).length;
   const searchQuery = document.getElementById('search').value;
   if (searchQuery === '') {
-    this.msg = 'Empty Input Detected!';
+    this.msg = 'Empty Input Detected! Please supply valid input';
+    invertedUIObj.notificationBoard(this.msg, 'error');
+  } else if (noOfOptions <= 2) {
+    this.msg = 'You have to upload file(s) and create index!';
     invertedUIObj.notificationBoard(this.msg, 'error');
   } else {
     utilObj.searchIndexTest(searchQuery);
+    this.msg = `Showing search result(s) for '${searchQuery}'`;
+    invertedUIObj.notificationBoard(this.msg, 'success');
   }
-});
-// An event listener to listen to create index button when clicked
-$('#create_id').click(() => {
-  invertedUIObj.emptyTable('create');
-  invertedUIObj.emptyTable('search');
-  const functionCallName = 'create';
-  const userEvent = 'click';
-  const fileName = $('#filename_id').val();
-  const uploadedFile = document.getElementById('files_id').files[0];
-  invertedUIObj.callCreateIndex(userEvent, fileName);
-});
-// An event listener to listen to when the user starts typing
-$('#search').keyup(() => {
-  $('#selectfilename2').css('display', 'block');
 });
 // This initialises the modal plugin once the documents is ready
 $(document).ready(() => {

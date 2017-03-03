@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/andela-nrotimi/inverted-index.svg?branch=master)](https://travis-ci.org/andela-nrotimi/inverted-index)
-[![Coverage Status](https://coveralls.io/repos/github/andela-nrotimi/inverted-index/badge.svg?branch=develop)](https://coveralls.io/github/andela-nrotimi/inverted-index?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/andela-nrotimi/inverted-index/badge.svg?branch=feedback)](https://coveralls.io/github/andela-nrotimi/inverted-index?branch=develop)
 [![Code Climate](https://codeclimate.com/github/andela-nrotimi/inverted-index/badges/gpa.svg)](https://codeclimate.com/github/andela-nrotimi/inverted-index)
 
 # inverted-index
@@ -19,13 +19,16 @@ An inverted index object that takes a JSON array of text objects and creates an 
     "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
   }
 ]
+
 ```
 - Creates Index of all objects with 'title' and 'text' keys in uploaded file.
 - Allows Searching through the created index.
 
 #### How to use
 The Application is available:
-- On the internet via [https://inverted-index-andela.com](https://inverted-index-andela.com/)
+
+- Access the application via https://nrotimi-inverted-index.herokuapp.com
+
 - And on any local machine after the following steps:
     ```
     git clone https://github.com/andela-nrotimi/inverted-index.git
@@ -50,9 +53,6 @@ The Application is available:
     npm start
     ```
 
-  - Access the application via https://nrotimi-inverted-index.herokuapp.com
-
-
 #### The application was built using the following Technologies and Services:
 - Gulp
 - Karma
@@ -61,6 +61,4 @@ The Application is available:
 - Coveralls
 - Hound CI
 - Materialise
-
-#### Limitation of the application
-The Application can not accept multiple upload at a time.
+- JQuery

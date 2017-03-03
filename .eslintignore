@@ -4,3 +4,6 @@ coverage
 jasmine/lib
 jasmine/build/bundle.js
 karma.conf.js
+src/eventListener.js
+src/invertedIndexUI.js
+src/util.js

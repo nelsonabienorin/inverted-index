@@ -16,11 +16,14 @@ class Util {
     this.searchResult = {};
     this.file = {};
   }
+
   /**
-   * Validate json file
-   * @param {object} uploadedFile
-   * @param: {string} fileName
-   * @returns {Boolean} returns a boolean
+   * validateFile
+   * Validates json file
+   * @param {Object} uploadedFile file uploaded by the user
+   * @param {String} fileName name of the file been uploaded
+   * @param {String} userEvent event been created by user
+   * @returns {Boolean} returns a boolean which could be true or false
    */
   validateFile(uploadedFile, fileName, userEvent) {
     this.allFileUploads = invertedClassObj.allFiles;
@@ -31,52 +34,51 @@ class Util {
       invertedUIObj.notificationBoard(this.msg, 'error');
       return false;
     }
-    for (const key in this.allFileUploads) {
-      if (key === this.file.name) {
-        this.msg = 'File already Exist!';
-        invertedUIObj.notificationBoard(this.msg, 'error');
-        return false;
-      }
+    if (typeof this.allFileUploads[this.file.name] === 'object') {
+      this.msg = 'File(s) already Exist!';
+      invertedUIObj.notificationBoard(this.msg, 'error');
+      return false;
     }
     if (this.file.type !== 'application/json') {
-      this.msg = 'File MUST be JSON!';
+      this.msg = 'File(s) MUST be JSON!';
       invertedUIObj.notificationBoard(this.msg, 'error');
       return false;
     }
     if (this.file.size === 0) {
-      this.msg = 'File cannot be EMPTY!';
+      this.msg = 'File(s) cannot be EMPTY!';
       invertedUIObj.notificationBoard(this.msg, 'error');
       return false;
     }
     invertedUIObj.fileReader(this.file, userEvent);
   }
+
   /**
    * Function searchIndexTest to
    * @param {string} searchQuery
-   * @returns {null}
+   * @returns {Void} Passes result to another function
    */
   searchIndexTest(searchQuery) {
     const selectedFile = invertedUIObj.getSelectedFileToSearch();
     const functionCallName = 'search';
-    if (typeof this.allFileUploads === 'undefined' || this.allFileUploads[selectedFile] === 'undefined' || !this.file.name || typeof this.file === 'undefined') {
+    if (typeof this.allFileUploads === 'undefined' ||
+      this.allFileUploads[selectedFile] === 'undefined' || !this.file.name ||
+      typeof this.file === 'undefined') {
       this.msg = 'You have to firstly Create Index!';
       invertedUIObj.notificationBoard(this.msg, 'error');
     } else if (typeof this.file.name === 'undefined') {
       this.msg = 'Empty Input Detected!';
       invertedUIObj.notificationBoard(this.msg, 'error');
     } else {
-      if (selectedFile === 'all') {
-        this.searchResult = invertedClassObj.searchIndex(searchQuery, selectedFile);
-        invertedUIObj.displayToViewAllSearch(this.searchResult, functionCallName);
-      }
       if (selectedFile !== null && selectedFile !== 'all') {
         this.searchResult = invertedClassObj.searchIndex(searchQuery,
           selectedFile);
-        invertedUIObj.displayToView(this.searchResult, functionCallName, selectedFile);
-      }
-      if (!selectedFile) {
-        this.searchResult = invertedClassObj.searchIndex(searchQuery, this.file.name);
-        invertedUIObj.displayToView(this.searchResult, functionCallName, this.file.name);
+        invertedUIObj.displayToView(this.searchResult,
+          functionCallName, selectedFile);
+      } else {
+        this.searchResult = invertedClassObj.searchIndex(searchQuery,
+          selectedFile);
+        invertedUIObj.displayToViewAllSearch(this.searchResult,
+          functionCallName);
       }
     }
   }

@@ -27,14 +27,15 @@ class Helper {
    * @returns {boolean} this.ifKeyExist
    */
   static validate(book) {
+    let ifKeyExist = false;
     book.forEach((doc) => {
       if (doc.title && doc.text) {
-        this.ifKeyExist = true;
+        ifKeyExist = true;
       } else {
-        this.ifKeyExist = false;
+        ifKeyExist = false;
       }
     });
-    return this.ifKeyExist;
+    return ifKeyExist;
   }
 
   /**
@@ -53,7 +54,8 @@ class Helper {
    * @param   {Object} docText Object containing page text
    * @returns {Object} A unique set of words from the page title and text
    */
-  static removeDuplicateWords(docText) {
+  static removeMultiWordsAndMakeArray(docText) {
     return [...new Set([...docText])];
   }
 }
+

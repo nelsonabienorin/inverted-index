@@ -223,7 +223,7 @@ class InvertedIndexUI {
       for (let term in jsonFileContent) {
         if (typeof this.fileHighestLength[jsonFileNames] !== 'undefined') {
           this.content += `<tr><td>  ${term}  </td>`;
-          let curArr = jsonFileContent[term];
+          const curArr = jsonFileContent[term];
           for (let j = 0; j < this.fileHighestLength[jsonFileNames]; j += 1) {
             if (curArr[j] === true) {
               this.content += `<td class = 'green-text'> ${found} </td>`;

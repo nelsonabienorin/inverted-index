@@ -28,7 +28,7 @@ $('#create_id').click(() => {
     const msg = `create index successfully,
     view switched to file ${selectedFile}`;
     invertedUIObj.notificationBoard(msg, 'success');
-    let fileExist = $(`#selectfilename2
+    const fileExist = $(`#selectfilename2
     option[value='${selectedFile}']`).length > 0;
     if (fileExist === false) {
       invertedUIObj.populateSearchSelectBox(selectedFile);

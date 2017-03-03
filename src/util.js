@@ -71,33 +71,15 @@ class Util {
     } else {
       if (selectedFile !== null && selectedFile !== 'all') {
         this.searchResult = invertedClassObj.searchIndex(searchQuery,
-        selectedFile);
+          selectedFile);
         invertedUIObj.displayToView(this.searchResult,
-        functionCallName, selectedFile);
+          functionCallName, selectedFile);
       } else {
         this.searchResult = invertedClassObj.searchIndex(searchQuery,
-        selectedFile);
+          selectedFile);
         invertedUIObj.displayToViewAllSearch(this.searchResult,
-        functionCallName);
+          functionCallName);
       }
     }
-  }
-
-  /**
-   * validate
-   * This checks if a json object has title and text key
-   * @param {Object} book
-   * @returns {Boolean}
-   */
-  static validate(book) {
-    let ifKeyExist = false;
-    book.forEach((doc) => {
-      if (doc.title && doc.text) {
-        ifKeyExist = true;
-      } else {
-        ifKeyExist = false;
-      }
-    });
-    return this.ifKeyExist;
   }
 }

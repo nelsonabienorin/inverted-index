@@ -18,24 +18,21 @@ class InvertedIndex {
   }
 
   /**
-   * populateIndex
-   * Populates the indexes and values of the words by
+   * sanitizeWords
    * removing special characters, duplicates and arrange index
    * @param {String} fileName
    * @param {Object} fileContent
    * @returns {any} does not result to other method
    */
-  populateIndex(fileName, fileContent) {
+  static sanitizeWords(fileName, fileContent) {
     const uniqueWords = [];
     fileContent.forEach((doc) => {
       if (doc.title && doc.text) {
         const docText = Helper.removeSpecialXters(doc.text);
-        uniqueWords.push(Helper.removeDuplicateWords(docText));
+        uniqueWords.push(Helper.removeMultiWordsAndMakeArray(docText));
       }
     });
-    uniqueWords.forEach((doc, position) => {
-      this.arrangeIndex(doc, position);
-    });
+    return uniqueWords;
   }
 
   /**
@@ -48,7 +45,10 @@ class InvertedIndex {
   createIndex(fileName, fileContents) {
     const validateJson = Helper.validate(fileContents);
     if (validateJson === true) {
-      this.populateIndex(fileName, fileContents);
+      const uniqueWords = InvertedIndex.sanitizeWords(fileName, fileContents);
+      uniqueWords.forEach((doc, position) => {
+        this.arrangeIndex(doc, position);
+      });
     } else {
       return false;
     }
@@ -95,17 +95,16 @@ class InvertedIndex {
    */
   searchIndex(input, fileName) {
     const searchResult = {};
-    const allSearchResult = {};
     const query = Helper.removeSpecialXters(input);
-    const uniqueQueryWords = Helper.removeDuplicateWords(query);
+    const uniqueQueryWords = Helper.removeMultiWordsAndMakeArray(query);
     if (fileName === 'all') {
       Object.keys(this.allFiles).forEach((key) => {
         const searchResultKey = {};
-        const searchCurrentDoc = this.allFiles[key];
+        const currentDoc = this.allFiles[key];
         uniqueQueryWords.forEach((word) => {
-          if (word in searchCurrentDoc) {
+          if (word in currentDoc) {
             searchResultKey[word] =
-              searchCurrentDoc[word];
+              currentDoc[word];
           } else {
             searchResultKey[word] = {
               0: false
